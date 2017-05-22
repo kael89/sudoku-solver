@@ -1,0 +1,32 @@
+* {
+	font-size: 30px;
+	box-sizing: border-box;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+tr:nth-child(3), tr:nth-child(6) {
+	border-bottom: 1px solid black;
+}
+
+td:nth-child(3), td:nth-child(6) {
+	border-right: 1px solid black;
+}
+
+td {
+	width: 80px;
+	height: 80px;
+	text-align: center;
+}
+
+input[type=number] {
+	width: 50px;
+	text-align: center;
+}
+
+.err-tooltip {
+	color: #ffffff;
+	font-size: 24px;
+}
