@@ -5,6 +5,9 @@ var elSudoku,
 elSudoku = document.getElementById("sudoku");
 elSolveBtn = document.getElementById("solve");
 sudoku = new Sudoku();
+//Test cases of different levels are included in js/test-cases.js
+//Uncommenting the next line is an easy way of using a test case::
+//sudoku = getTestCase(4);
 
 createSudoku();
 createSolveBtn();
