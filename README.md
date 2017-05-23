@@ -22,5 +22,5 @@ levels. An easy way to use those tests is provided in the beggining of the main 
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0, except than the opentip component (js/opentip-native.min.js) which is licenced under the MIT licence - see the [GNU GPL v3.md](GNU GPL v3.md), [MIT.md](MIT.md)  files for details
+This project is licensed under the GNU General Public License v3.0, except than the Opentip component (js/opentip-native.min.js) which is licenced under the MIT licence (Copyright (c) 2009-2012, Matias Meno).
 
