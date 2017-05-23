@@ -13,11 +13,14 @@ Just clone/download the project files, and run index.html at your browser of cho
 The repo contains a file, test-cases.js, with test cases of different 
 levels. An easy way to use those tests is provided in the beggining of the main code file, sudoku.js. You can also see the initial (before solving) and final Sudoku tables in your browser's console.
 
+## Built With
+* [Opentip](http://www.opentip.org/) - Used to generate tooltips for erros in user input
+
 ## Authors
 
 **Kostas Karvounis** - [kael89](https://github.com/kael89)
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0, except than the opentip component (js/opentip-native.min.js) which is licenced under the MIT licence - see the [GNU GPL v3.md](GNU GPL v3.md), [MIT.md](MIT.md)  files for details
 
