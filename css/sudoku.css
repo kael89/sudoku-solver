@@ -4,12 +4,12 @@
 }
 
 body {
-	background: #EDDFF2;
+	background: #eddff2;
 }
 
 table {
 	border-collapse: collapse;
-	background: linear-gradient(to right, #E0CCE8, #D0BFD6, #E0CCE8);
+	background: linear-gradient(to right, #e0cce8, #d0bfd6, #e0cce8);
 }
 
 tr:nth-child(3), tr:nth-child(6) {
@@ -28,15 +28,15 @@ td {
 
 input[type=number] {
 	width: 50px;
-	color: #F02244;	
-	background: #F2F0CE;	
+	color: #f02244;	
+	background: #f2f0ce;	
 	font-weight: bold;
 	text-align: center;
 }
 
 button {
-	color: #F02244;	
-	background: #F2F0CE;		
+	color: #f02244;	
+	background: #f2f0ce;		
 	font-size: 24px;
 }
 
