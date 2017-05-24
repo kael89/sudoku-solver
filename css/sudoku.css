@@ -3,8 +3,13 @@
 	box-sizing: border-box;
 }
 
+body {
+	background: #EDDFF2;
+}
+
 table {
 	border-collapse: collapse;
+	background: linear-gradient(to right, #E0CCE8, #D0BFD6, #E0CCE8);
 }
 
 tr:nth-child(3), tr:nth-child(6) {
@@ -23,11 +28,25 @@ td {
 
 input[type=number] {
 	width: 50px;
+	color: #F02244;	
+	background: #F2F0CE;	
+	font-weight: bold;
 	text-align: center;
 }
 
 button {
-	margin-bottom: 10px;
+	color: #F02244;	
+	background: #F2F0CE;		
+	font-size: 24px;
+}
+
+#page-container {
+	width: 700px;
+	margin: 50px auto;
+}
+
+#solve {
+	margin: 15px;
 }
 
 .err-tooltip {
