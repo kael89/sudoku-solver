@@ -1,12 +1,14 @@
 # Sudoku Solver
 
+Live system version: https://sudoku-solver-kael89.herokuapp.com/
+
 This project is a web page which can solve a Sudoku problem. The user enters the desired values in the Sudoku cells, and after pushing the "Solve" button they can see the result in the page. 
 
 The program also detects errors in the user input, e.g. same number in the same row, etc. The program will not be able to solve the Sudoku, unless all values are valid.
 
 ## Installing
 
-Just clone/download the project files, and run index.html at your browser of choice.
+Just clone/download the project files, and run sudoku-solver.html at your browser of choice.
 
 ## Running the tests
 
