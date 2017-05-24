@@ -21,7 +21,9 @@ elSolveBtn.addEventListener("click", function() { solveSudoku(sudoku) });
 function solveSudoku(sudoku) {
 	sudoku.consoleOut();
 	console.log("---Solve---");
-	sudoku = sudoku.solve();
+	while (!(sudoku = sudoku.solve()))
+		alert("Error(s) found in your Sudoku.\n" +
+			"Please correct the error(s) before solving the Sudoku");
 	sudoku.print();
 	sudoku.consoleOut();
 }
@@ -108,6 +110,7 @@ function Cell(value, availValues) {
 /***Sudoku Object***/
 function Sudoku(cellsIn) {
 	var cells,
+		errTooltips,
 		i,
 		j;
 
@@ -118,9 +121,11 @@ function Sudoku(cellsIn) {
 			availValsIn;
 
 		cells = [];
+		errTooltips = [];
 
 		for (i = 1; i <= 9; i++) {
 			cells[i] = [];
+			errTooltips[i] = [];
 			for (j = 1; j <= 9; j++ ) {
 				if (cellsIn) {
 					valIn	= cellsIn[i][j].getVal();
@@ -134,43 +139,61 @@ function Sudoku(cellsIn) {
 	}
 
 	this.setCell = function(elCell) {
-		var val,
-			errTooltip;
+		var val;
 
 		val = elCell.value;
-		row = elCell.dataset.row;
-		col = elCell.dataset.col;
+		row = parseInt(elCell.dataset.row);
+		col = parseInt(elCell.dataset.col);
 
 		if (!val)
 			return;
+		else
+			cells[row][col].set(val);
 
 		if (!checkRow(val, row, col)) {
-			errTooltip = new Opentip(elCell, 
-				"<span class='err-tooltip'>Row error</span>",
-				{ style: "sudokuError" });
-			errTooltip.show();
+			createErrTooltip("Row error", elCell, row, col);
 		} else if (!checkCol(val, row, col))	{
-			errTooltip = new Opentip(elCell, 
-				"<span class='err-tooltip'>Column error</span>",
-				{ style: "sudokuError" });
-			errTooltip.show();
+			createErrTooltip("Column error", elCell, row, col);
 		}	else if (!checkSqr(val, row, col))	{
-			errTooltip = new Opentip(elCell, 
-				"<span class='err-tooltip'>Square error</span>",
-				{ style: "sudokuError" });
-			errTooltip.show();
-		}	else (checkRow(val, row, col))
-			setVal(val, row, col);
+			createErrTooltip("Square error", elCell, row, col);
+		}	else if (errTooltips[row][col])
+				deleteErrTooltip(row, col);
+	}
+
+	function createErrTooltip(errText, elCell, row, col) {
+		errTooltips[row][col] = new Opentip(elCell, 
+			"<span class='err-tooltip'>" + errText + "</span>",
+			{ style: "sudokuError", removeElementsOnHide: "true" });
+
+		errTooltips[row][col].show();
+						console.log(errTooltips[row][col]);
+						console.log(Opentip.tips);
+	}
+
+	function deleteErrTooltip(row, col) {
+				errTooltips[row][col].deactivate();
+				errTooltips[row][col] = null;		
+	}
+
+	function errsExist() {
+		var i,
+			j;
+
+		for (i = 1; i <= 9; i++)
+			for (j = 1; j <= 9; j++)
+				if (errTooltips[i][j])
+					return true;
+
+		return false;
 	}
 
 	//Checks whether value "val" already exists in the given row
 	function checkRow(val, row, col) {
 		var j;
 
-		for (j = 1; j <= 9; j++) {
+		for (j = 1; j <= 9; j++)
 			if (val === cells[row][j].getVal() && j !== col)
 				return false;
-		}
 
 		return true;
 	}
@@ -179,10 +202,9 @@ function Sudoku(cellsIn) {
 	function checkCol(val, row, col) {
 		var j;
 
-		for (i = 1; i <= 9; i++) {
+		for (i = 1; i <= 9; i++)
 			if (val === cells[i][col].getVal() && i !== row)
 				return false;
-		}
 
 		return true;
 	}
@@ -363,6 +385,9 @@ function Sudoku(cellsIn) {
 			j;
 
 		if (!val) {
+			if (errsExist())
+				return null;
+
 			for (i = 1; i <= 9; i++)
 				for (j = 1; j <= 9; j++)
 					if (cells[i][j].getVal())
@@ -388,7 +413,7 @@ function Sudoku(cellsIn) {
 		} while (!newSudoku);
 
 		return newSudoku;
-}
+	}
 
 	this.print = function() {
 		var elCell,
