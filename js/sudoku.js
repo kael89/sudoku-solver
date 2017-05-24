@@ -1,18 +1,21 @@
 var elSudoku,
 	elSolveBtn,
+	elClearBtn,
 	sudoku;
 
 elSudoku = document.getElementById("sudoku");
 elSolveBtn = document.getElementById("solve");
+elClearBtn = document.getElementById("clear");
 sudoku = new Sudoku();
 //Test cases of different levels are included in js/test-cases.js
 //Uncommenting the next line is an easy way of using a test case::
 //sudoku = getTestCase(4);
 
 createSudoku();
-createSolveBtn();
+createButtons();
 setOpentipStyle();
 elSolveBtn.addEventListener("click", function() { solveSudoku(sudoku) });
+elClearBtn.addEventListener("click", function() { clearSudoku(sudoku) });
 
 /*********************/
 /***Sudoku Solving***/
@@ -26,6 +29,11 @@ function solveSudoku(sudoku) {
 			"Please correct the error(s) before solving the Sudoku");
 	sudoku.print();
 	sudoku.consoleOut();
+}
+
+function clearSudoku(sudoku) {
+	sudoku.reset();
+	sudoku.print();
 }
 
 /*************/
@@ -136,6 +144,18 @@ function Sudoku(cellsIn) {
 					cells[i][j] = new Cell();			
 			}
 		}
+	}
+
+	this.reset = function() {
+		var i,
+			j;
+
+		for (i = 1; i <= 9; i++)
+			for (j = 1; j <= errTooltips[i].length; j++)
+				if (errTooltips[i][j])
+					deleteErrTooltip(i, j);
+
+		create();
 	}
 
 	this.setCell = function(elCell) {
@@ -543,7 +563,7 @@ function createSudoku() {
 	}
 }
 
-function createSolveBtn() {
+function createButtons() {
 	var elParent;
 
 	elParent = elSolveBtn.parentNode;

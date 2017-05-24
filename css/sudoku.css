@@ -26,6 +26,10 @@ input[type=number] {
 	text-align: center;
 }
 
+button {
+	margin-bottom: 10px;
+}
+
 .err-tooltip {
 	color: #ffffff;
 	font-size: 24px;
