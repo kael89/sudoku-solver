@@ -28,14 +28,14 @@ td {
 
 input[type=number] {
 	width: 50px;
-	color: #f02244;	
+	color: #c98002;	
 	background: #f2f0ce;	
 	font-weight: bold;
 	text-align: center;
 }
 
 button {
-	color: #f02244;	
+	color: #c98002;	
 	background: #f2f0ce;		
 	font-size: 24px;
 }
@@ -52,4 +52,8 @@ button {
 .err-tooltip {
 	color: #ffffff;
 	font-size: 24px;
+}
+
+.usr-input {
+	
 }

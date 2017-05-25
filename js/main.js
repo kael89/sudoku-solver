@@ -67,7 +67,6 @@ function createButtons() {
 }
 
 function setOpentipStyle() {
-
 	Opentip.styles.sudokuError = {
 	 target: true,
 	 tipJoint: "bottom left",
