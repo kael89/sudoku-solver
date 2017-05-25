@@ -10,6 +10,7 @@ body {
 table {
 	border-collapse: collapse;
 	background: linear-gradient(to right, #e0cce8, #d0bfd6, #e0cce8);
+	box-shadow: 0px 0px 30px;
 }
 
 tr:nth-child(3), tr:nth-child(6) {
