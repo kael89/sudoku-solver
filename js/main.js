@@ -32,6 +32,14 @@ function solveSudoku(sudoku) {
 }
 
 function clearSudoku(sudoku) {
+	var userInputs,
+		i;
+
+	userInputs = document.querySelectorAll("input.usr-input");
+	console.log(userInputs.length);
+	for (i = 0; i < userInputs.length; i++)
+		userInputs[i].removeAttribute("class");
+
 	sudoku.reset();
 	sudoku.print();
 }
@@ -39,6 +47,7 @@ function clearSudoku(sudoku) {
 function createSudoku() {
 	var elRow,
 		elCell,
+		elInput,
 		dataTag;
 
 	for (i = 1; i <= 9; i++) {
@@ -48,9 +57,16 @@ function createSudoku() {
 			dataTag = "data-row='" + i + "' data-col='" + j + "'";
 			elCell.innerHTML = 
 				"<input " + dataTag + " type='number' min='1' max='9'>";
-			elCell.firstChild.addEventListener("blur", function() { 
-				sudoku.setCell(this) 
+
+			elInput = elCell.firstChild;
+			elInput.addEventListener("blur", function() {
+				sudoku.setCell(this);
+				setDefaultInputStyle(this);
 			});
+			elInput.addEventListener("focus", function() { 
+				setUserInputStyle(this);
+			});
+
 			elRow.appendChild(elCell);
 		}
 
@@ -72,4 +88,14 @@ function setOpentipStyle() {
 	 tipJoint: "bottom left",
 	 background: "#ff4949",
 	}
+}
+
+function setUserInputStyle(elCell) {
+	elCell.className = "usr-input";
+}
+
+function setDefaultInputStyle(elCell) {
+	console.log("megale")
+	if (!elCell.value)
+		elCell.removeAttribute("class");
 }

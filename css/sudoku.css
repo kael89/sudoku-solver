@@ -35,7 +35,7 @@ input[type=number] {
 }
 
 button {
-	color: #c98002;	
+	color: #ea3919;	
 	background: #f2f0ce;		
 	font-size: 24px;
 }
@@ -54,6 +54,6 @@ button {
 	font-size: 24px;
 }
 
-.usr-input {
-	
+input.usr-input {
+	color: #589958;
 }

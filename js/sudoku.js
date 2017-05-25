@@ -51,8 +51,10 @@ function Sudoku(cellsIn) {
 
 		if (!val)
 			return;
-		else
+		else {
 			cells[row][col].set(val);
+			setUserInputStyle(elCell);
+		}
 
 		if (!checkRow(val, row, col)) {
 			createErrTooltip("Row error", elCell, row, col);
