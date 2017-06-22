@@ -78,8 +78,7 @@ function createButtons() {
 	var elParent;
 
 	elParent = elSolveBtn.parentNode;
-	elParent.style.width = elSudoku.offsetWidth + "px";
-	elParent.style.textAlign = "center";
+	// elParent.style.textAlign = "center";
 }
 
 function setOpentipStyle() {
@@ -95,7 +94,6 @@ function setUserInputStyle(elCell) {
 }
 
 function setDefaultInputStyle(elCell) {
-	console.log("megale")
 	if (!elCell.value)
 		elCell.removeAttribute("class");
 }
