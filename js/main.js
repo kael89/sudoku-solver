@@ -15,18 +15,20 @@ sudoku = new Sudoku();
 
 createSudoku();
 createButtons();
-setOpentipStyle();
 elSolveBtn.addEventListener("click", function() { solveSudoku(sudoku) });
 elClearBtn.addEventListener("click", function() { clearSudoku(sudoku) });
 
 /***Functions***/
 
 function solveSudoku(sudoku) {
+    var alertMsg;
+
+    alertMsg = "Error" + (errors > 1 ? "s" : "") + " found in your Sudoku.\n" +
+            "Please correct the error(s) before solving the Sudoku"
     sudoku.consoleOut();
     console.log("---Solve---");
     while (!(sudoku = sudoku.solve())) {
-        alert("Error(s) found in your Sudoku.\n" +
-            "Please correct the error(s) before solving the Sudoku");
+        alert(alertMsg);
     }
     sudoku.print();
     sudoku.consoleOut();
@@ -81,14 +83,6 @@ function createButtons() {
 
     elParent = elSolveBtn.parentNode;
     // elParent.style.textAlign = "center";
-}
-
-function setOpentipStyle() {
-    Opentip.styles.sudokuError = {
-     target: true,
-     tipJoint: "bottom left",
-     background: "#ff4949",
-    }
 }
 
 function setUserInputStyle(elCell) {

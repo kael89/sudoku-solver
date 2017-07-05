@@ -132,3 +132,7 @@ input[type=number] {
 input.usr-input {
     color: #589958;
 }
+
+input.wrong-input {
+    border: 2px solid red;
+}

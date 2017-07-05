@@ -2,7 +2,7 @@
 
 function Sudoku(cellsIn) {
     var cells,
-        errTooltips,
+        errors,
         i,
         j;
 
@@ -13,11 +13,10 @@ function Sudoku(cellsIn) {
             availValsIn;
 
         cells = [];
-        errTooltips = [];
+        errors = 0;
 
         for (i = 1; i <= 9; i++) {
             cells[i] = [];
-            errTooltips[i] = [];
             for (j = 1; j <= 9; j++ ) {
                 if (cellsIn) {
                     valIn   = cellsIn[i][j].getVal();
@@ -32,73 +31,32 @@ function Sudoku(cellsIn) {
     }
 
     this.reset = function() {
-        var i,
-            j;
-
-        for (i = 1; i <= 9; i++) {
-            for (j = 1; j <= errTooltips[i].length; j++) {
-                if (errTooltips[i][j]) {
-                    deleteErrTooltip(i, j);
-                }
-            }
-        }
-
         create();
     }
 
     this.setCell = function(elCell) {
-        var val;
+        var val,
+            currentClass;
 
         val = elCell.value;
         row = parseInt(elCell.dataset.row);
         col = parseInt(elCell.dataset.col);
 
-        if (!val) {
-            return;
-        } else if (val > 9 || val < 1) {
-            createErrTooltip("Value out of range", elCell, row, col);
-            return;
-        } else {
-            cells[row][col].set(val);
-            setUserInputStyle(elCell);
+        if (val) {
+            if (checkInput(val, row, col)) {
+                cells[row][col].set(val);
+                setUserInputStyle(elCell);
+                elCell.classList.remove("wrong-input");
+                errors--;
+            } else {
+                elCell.className = "wrong-input";
+                errors++;
+            }
         }
-
-        if (!checkRow(val, row, col)) {
-            createErrTooltip("Row error", elCell, row, col);
-        } else if (!checkCol(val, row, col))    {
-            createErrTooltip("Column error", elCell, row, col);
-        } else if (!checkSqr(val, row, col))  {
-            createErrTooltip("Square error", elCell, row, col);
-        } else if (errTooltips[row][col])
-            deleteErrTooltip(row, col);
-    }
-
-    function createErrTooltip(errText, elCell, row, col) {
-        errTooltips[row][col] = new Opentip(elCell, 
-            "<span class='err-tooltip'>" + errText + "</span>",
-            { style: "sudokuError", removeElementsOnHide: "true" });
-
-        errTooltips[row][col].show();
-    }
-
-    function deleteErrTooltip(row, col) {
-                errTooltips[row][col].deactivate();
-                errTooltips[row][col] = null;       
     }
 
     function errsExist() {
-        var i,
-            j;
-
-        for (i = 1; i <= 9; i++) {
-            for (j = 1; j <= 9; j++) {
-                if (errTooltips[i][j]) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return !errors;
     }
 
     //Checks whether value "val" already exists in the given row
@@ -148,6 +106,10 @@ function Sudoku(cellsIn) {
         }
 
         return true;
+    }
+
+    function checkInput(val, row, col) {
+        return checkRow(val, row, col) && checkCol(val, row, col) && checkSqr(val, row, col) && (val > 0) && (val < 10);
     }
 
     //For a given position in the table, returns the coordinates (row, column)
