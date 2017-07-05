@@ -1,3 +1,3 @@
 <?php
-	include_once("sudoku-solver.html");
+    include_once("sudoku-solver.html");
 ?>

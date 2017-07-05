@@ -1,103 +1,124 @@
 /*
-	Basic size parameters:
+    Basic size parameters:
 
-	*.font-size
-	#page-container.width
+    *.font-size
+    #page-container.width
 */
 
 * {
-	font-size: 16px;
-	box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Times New Roman";
 }
 
 body {
-	background: #eddff2;
+    background: #eddff2;
 }
 
-#page-container {
-	margin: 30px auto;
-	width: 600px;
-	height: auto;
-}
-
-#page-container > * {
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
+h1, h2 {
+    color: #764383;
+    margin: 2.5% 0%;
 }
 
 h1 {
-	color: #764383;
-	font-size: 2em;
+    font-size: 2em;
 }
 
-#sudoku-container {
-	width: 100%;
-	padding-top: 100%;
-	position: relative;
+h2 {
+    font-size: 1.6em;
 }
 
-#sudoku-container div {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+p{
+    font-size: 1.2em;
+    color: #c94e02;
+    margin: 2.5% 0%;
 }
 
 table {
-	border-collapse: collapse;
-	background: linear-gradient(to right, #e0cce8, #d0bfd6, #e0cce8);
-	box-shadow: 0px 0px 30px;
-	width: 100%;
-	height: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(to right, #e0cce8, #d0bfd6, #e0cce8);
+    box-shadow: 0px 0px 30px;
+    width: 100%;
+    height: 100%;
 }
 
 tr:nth-child(3), tr:nth-child(6) {
-	border-bottom: 1px solid black;
-	color: #391841;
+    border-bottom: 1px solid black;
+    color: #391841;
 }
 
 td:nth-child(3), td:nth-child(6) {
-	border-right: 1px solid black;
-	color: #391841;
+    border-right: 1px solid black;
+    color: #391841;
 }
 
 td {
-	width: 11%;
-	height: 11%;
-	text-align: center;
-}
-
-input[type=number] {
-	width: 63%;
-	height: 63%;
-	color: #c98002;	
-	background: #f2f0ce;	
-	font-weight: bold;
-	font-size: 1.3em;
-	text-align: center;
+    width: 11%;
+    height: 11%;
+    text-align: center;
 }
 
 button {
-	color: #ea3919;
-	background: #f2f0ce;		
-	font-size: 1.2em;
+    color: #c94e02;
+    background: #f2f0ce;
+    font-size: 1.4em;
+}
+
+input[type=number] {
+    width: 63%;
+    height: 63%;
+    color: #c98002; 
+    background: #f2f0ce;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+#intro-message {
+    font-size: 1.3em;
+    color: #c94e02;
+    margin: 2.5% 0%;
+}
+
+#page-container {
+    margin: 0px auto;
+    width: 600px;
+    height: auto;
+}
+
+#page-container > * {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sudoku-container {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    margin-top: 5%;
+}
+
+#sudoku-container div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 #button-container {
-	width: auto;
+    width: auto;
 }
 
 #solve {
-	margin: 2%;
+    margin: 2%;
 }
 
 .err-tooltip {
-	color: #ffffff;
-	font-size: 1em;
+    color: #ffffff;
+    font-size: 1em;
 }
 
 input.usr-input {
-	color: #589958;
+    color: #589958;
 }
