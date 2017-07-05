@@ -24,9 +24,10 @@ elClearBtn.addEventListener("click", function() { clearSudoku(sudoku) });
 function solveSudoku(sudoku) {
     sudoku.consoleOut();
     console.log("---Solve---");
-    while (!(sudoku = sudoku.solve()))
+    while (!(sudoku = sudoku.solve())) {
         alert("Error(s) found in your Sudoku.\n" +
             "Please correct the error(s) before solving the Sudoku");
+    }
     sudoku.print();
     sudoku.consoleOut();
 }
@@ -37,8 +38,9 @@ function clearSudoku(sudoku) {
 
     userInputs = document.querySelectorAll("input.usr-input");
     console.log(userInputs.length);
-    for (i = 0; i < userInputs.length; i++)
+    for (i = 0; i < userInputs.length; i++) {
         userInputs[i].removeAttribute("class");
+    }
 
     sudoku.reset();
     sudoku.print();
@@ -94,6 +96,7 @@ function setUserInputStyle(elCell) {
 }
 
 function setDefaultInputStyle(elCell) {
-    if (!elCell.value)
+    if (!elCell.value) {
         elCell.removeAttribute("class");
+    }
 }

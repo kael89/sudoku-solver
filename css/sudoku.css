@@ -3,6 +3,12 @@
 
     *.font-size
     #page-container.width
+
+    Colors:
+    purple  #764383
+    red     #c94e02
+    green   #589958
+    orange  #c98002
 */
 
 * {
@@ -27,7 +33,7 @@ h2 {
     font-size: 1.6em;
 }
 
-p{
+p {
     font-size: 1.2em;
     color: #c94e02;
     margin: 2.5% 0%;
@@ -42,13 +48,11 @@ table {
 }
 
 tr:nth-child(3), tr:nth-child(6) {
-    border-bottom: 1px solid black;
-    color: #391841;
+    border-bottom: 2px solid #764383;
 }
 
 td:nth-child(3), td:nth-child(6) {
-    border-right: 1px solid black;
-    color: #391841;
+    border-right: 2px solid #764383;
 }
 
 td {
@@ -63,14 +67,20 @@ button {
     font-size: 1.4em;
 }
 
+button:hover {
+    cursor: pointer;
+    color: #a5480f;
+    background: #dcd9a4;
+}
+
 input[type=number] {
     width: 63%;
     height: 63%;
     color: #c98002; 
     background: #f2f0ce;
     font-weight: bold;
-    font-size: 1.3em;
-    text-align: center;
+    font-size: 1.5em;
+    text-align: right;
 }
 
 #intro-message {

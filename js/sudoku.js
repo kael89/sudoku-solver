@@ -24,8 +24,9 @@ function Sudoku(cellsIn) {
                     availValsIn = cellsIn[i][j].getAvailVals();
                     cells[i][j] = new Cell(valIn, availValsIn);
                 }
-                else
+                else {
                     cells[i][j] = new Cell();
+                }
             }
         }
     }
@@ -34,10 +35,13 @@ function Sudoku(cellsIn) {
         var i,
             j;
 
-        for (i = 1; i <= 9; i++)
-            for (j = 1; j <= errTooltips[i].length; j++)
-                if (errTooltips[i][j])
+        for (i = 1; i <= 9; i++) {
+            for (j = 1; j <= errTooltips[i].length; j++) {
+                if (errTooltips[i][j]) {
                     deleteErrTooltip(i, j);
+                }
+            }
+        }
 
         create();
     }
@@ -49,9 +53,12 @@ function Sudoku(cellsIn) {
         row = parseInt(elCell.dataset.row);
         col = parseInt(elCell.dataset.col);
 
-        if (!val)
+        if (!val) {
             return;
-        else {
+        } else if (val > 9 || val < 1) {
+            createErrTooltip("Value out of range", elCell, row, col);
+            return;
+        } else {
             cells[row][col].set(val);
             setUserInputStyle(elCell);
         }
@@ -60,10 +67,10 @@ function Sudoku(cellsIn) {
             createErrTooltip("Row error", elCell, row, col);
         } else if (!checkCol(val, row, col))    {
             createErrTooltip("Column error", elCell, row, col);
-        }   else if (!checkSqr(val, row, col))  {
+        } else if (!checkSqr(val, row, col))  {
             createErrTooltip("Square error", elCell, row, col);
-        }   else if (errTooltips[row][col])
-                deleteErrTooltip(row, col);
+        } else if (errTooltips[row][col])
+            deleteErrTooltip(row, col);
     }
 
     function createErrTooltip(errText, elCell, row, col) {
@@ -72,8 +79,6 @@ function Sudoku(cellsIn) {
             { style: "sudokuError", removeElementsOnHide: "true" });
 
         errTooltips[row][col].show();
-                        console.log(errTooltips[row][col]);
-                        console.log(Opentip.tips);
     }
 
     function deleteErrTooltip(row, col) {
@@ -85,10 +90,13 @@ function Sudoku(cellsIn) {
         var i,
             j;
 
-        for (i = 1; i <= 9; i++)
-            for (j = 1; j <= 9; j++)
-                if (errTooltips[i][j])
+        for (i = 1; i <= 9; i++) {
+            for (j = 1; j <= 9; j++) {
+                if (errTooltips[i][j]) {
                     return true;
+                }
+            }
+        }
 
         return false;
     }
@@ -97,9 +105,11 @@ function Sudoku(cellsIn) {
     function checkRow(val, row, col) {
         var j;
 
-        for (j = 1; j <= 9; j++)
-            if (val === cells[row][j].getVal() && j !== col)
+        for (j = 1; j <= 9; j++) {
+            if (val === cells[row][j].getVal() && j !== col) {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -108,9 +118,11 @@ function Sudoku(cellsIn) {
     function checkCol(val, row, col) {
         var j;
 
-        for (i = 1; i <= 9; i++)
-            if (val === cells[i][col].getVal() && i !== row)
+        for (i = 1; i <= 9; i++) {
+            if (val === cells[i][col].getVal() && i !== row) {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -127,10 +139,13 @@ function Sudoku(cellsIn) {
         rowStart = sqrStart[0];
         colStart = sqrStart[1];
 
-        for (i = rowStart; i <= rowStart + 2; i++)
-            for (j = colStart; j <= colStart + 2; j++)
-                if (val === cells[i][j].getVal() && (i!== row || j !== col))
+        for (i = rowStart; i <= rowStart + 2; i++) {
+            for (j = colStart; j <= colStart + 2; j++) {
+                if (val === cells[i][j].getVal() && (i!== row || j !== col)) {
                     return false;
+                }
+            }
+        }
 
         return true;
     }
@@ -145,19 +160,21 @@ function Sudoku(cellsIn) {
 
         limits = [];
 
-        if (row < 4)
+        if (row < 4) {
             rowStart = 1;
-        else if (row < 7)
+        } else if (row < 7) {
             rowStart = 4;
-        else
+        } else {
             rowStart = 7;
+        }
 
-        if (col < 4)
+        if (col < 4) {
             colStart = 1;
-        else if (col < 7)
+        } else if (col < 7) {
             colStart = 4;
-        else
+        } else {
             colStart = 7;
+        }
 
         limits[0] = rowStart;
         limits[1] = colStart;
@@ -189,19 +206,23 @@ function Sudoku(cellsIn) {
 
         //Exclude given value from the available values of other cells in the
         //same row.
-        for (j = 1; j <= 9; j++)
+        for (j = 1; j <= 9; j++) {
             exclude(val, row, j);
+        }
 
         //Exclude given value from the available values of other cells in the
         //same column. 
-        for (i = 1; i <= 9; i++)
+        for (i = 1; i <= 9; i++) {
             exclude(val, i, col);
+        }
 
         //Exclude given value from the available values of other cells in the
         //same row
-        for (i = rowStart; i <= rowStart + 2; i++)
-            for (j = colStart; j <= colStart + 2; j++)
+        for (i = rowStart; i <= rowStart + 2; i++) {
+            for (j = colStart; j <= colStart + 2; j++) {
                 exclude(val, i, j);
+            }
+        }
     }
 
     function exclude(val, row, col) {
@@ -209,8 +230,9 @@ function Sudoku(cellsIn) {
             newVal;
 
         cell = cells[row][col];
-        if (cell.getVal())
+        if (cell.getVal()) {
             return;
+        }
 
         cell.exclude(val);
         if (cell.availValsCount() === 1) {
@@ -233,12 +255,13 @@ function Sudoku(cellsIn) {
         cell = [];
         min = 10;
 
-        for (i = 1; i<= 9; i++)
-            for (j = 1; j <= 9; j++)
+        for (i = 1; i<= 9; i++) {
+            for (j = 1; j <= 9; j++) {
                 if (!cells[i][j].getVal()) {
                     count = cells[i][j].availValsCount();
-                    if (count === 0)
+                    if (count === 0) {
                         return cell;
+                    }
                     else if (count < min) {
                         min = count;
                         cell[0] = i;
@@ -246,6 +269,8 @@ function Sudoku(cellsIn) {
                         cell[2] = cells[i][j].firstAvailVal();
                     }
                 }
+            }
+        }
 
         return cell;
     }
@@ -256,13 +281,14 @@ function Sudoku(cellsIn) {
             i,
             j;
 
-        for (i = 1; i <= 9; i++)
+        for (i = 1; i <= 9; i++) {
             for (j = 1; j <= 9; j++) {
                 val = cells[i][j].getVal();
-                if (val && (!checkRow(val, i, j) || !checkCol(val, i, j) || 
-                    !checkSqr(val, i, j)))
+                if (val && (!checkRow(val, i, j) || !checkCol(val, i, j) || !checkSqr(val, i, j))) {
                     return false;
+                }
             }
+        }
 
         return true;
     }
@@ -271,10 +297,13 @@ function Sudoku(cellsIn) {
         var i,
             j;
 
-        for (i = 1; i <= 9; i++)
-            for (j = 1; j <= 9; j++)
-                if (!cells[i][j].getVal())
+        for (i = 1; i <= 9; i++) {
+            for (j = 1; j <= 9; j++) {
+                if (!cells[i][j].getVal()) {
                     return false;
+                }
+            }
+        }
 
         return true;
     }
@@ -291,23 +320,28 @@ function Sudoku(cellsIn) {
             j;
 
         if (!val) {
-            if (errsExist())
+            if (errsExist()) {
                 return null;
+            }
 
-            for (i = 1; i <= 9; i++)
-                for (j = 1; j <= 9; j++)
-                    if (cells[i][j].getVal())
+            for (i = 1; i <= 9; i++) {
+                for (j = 1; j <= 9; j++) {
+                    if (cells[i][j].getVal()) {
                         applyRules(i, j);
+                    }
+                }
+            }
         }
-        else
+        else {
             setVal(val, row, col);
+        }
 
         do {
-            if (!checkRules())
+            if (!checkRules()) {
                 return null;
-            else if (filled())
+            } else if (filled()) {
                 return this;
-            else {
+            } else {
                 newCell = findAvailVal();
                 row = newCell[0];
                 col = newCell[1];
@@ -327,12 +361,13 @@ function Sudoku(cellsIn) {
             i,
             j;
 
-        for (i = 1; i <= 9; i++)
+        for (i = 1; i <= 9; i++) {
             for (j = 1; j <= 9; j++) {
                 query = "input[data-row='" + i + "'][data-col='" + j + "']";
                 elCell = document.querySelector(query);
                 elCell.value = cells[i][j].getVal();
             }
+        }
     }
 
     //(Debugging) Prints the current Sudoku in the console
@@ -349,18 +384,21 @@ function Sudoku(cellsIn) {
             str = "(" + String.fromCharCode(96 + i) + ")  ";
 
             for (j = 1; j <= 9; j++) {
-                if (val = cells[i][j].getVal())
+                if (val = cells[i][j].getVal()) {
                     str += val + "  ";
-                else
+                } else {
                     str += "   ";
+                }
 
-                if (j === 3 || j === 6)
+                if (j === 3 || j === 6) {
                     str += "|  "
+                }
             }           
             console.log(str);
 
-            if (i === 3 || i === 6)
+            if (i === 3 || i === 6) {
                 console.log("    --------------------------------");
+            }
 
         }
 
@@ -373,7 +411,7 @@ function Sudoku(cellsIn) {
             i,
             j;
 
-        for (i = 1; i <= 9; i++)
+        for (i = 1; i <= 9; i++) {
             for (j = 1; j <= 9; j++)    {
                 if (val = arr[i][j]) {
                     if (!checkRow(val, i, j)) {
@@ -391,9 +429,11 @@ function Sudoku(cellsIn) {
                     }
                     cells[i][j] = new Cell(val);
                 }
-                else
+                else {
                     cells[i][j] = new Cell();
+                }
             }
+        }
     }
 
     //(Testing) Prints out cell value in the fiven row, column
@@ -408,8 +448,9 @@ function Sudoku(cellsIn) {
         var j;
 
         console.log("Row " + row);
-        for (j = 1; j <= 9; j++)
+        for (j = 1; j <= 9; j++) {
             cells[row][j].test();
+        }
     }
 
     //(Testing) Prints out cell values in the given column
@@ -417,7 +458,8 @@ function Sudoku(cellsIn) {
         var i;
 
         console.log("Column " + col);
-        for (i = 1; i <= 9; i++)
+        for (i = 1; i <= 9; i++) {
             cells[i][col].test();
+        }
     }
 }
