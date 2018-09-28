@@ -18,11 +18,6 @@ The program also detects errors in the user input, e.g. same number in the same 
 
 Just clone/download the project files, and run sudoku-solver.html at your browser of choice.
 
-## Running the tests
-
-The repo contains a file, test-cases.js, with test cases of different 
-levels. An easy way to use those tests is provided in the beggining of the main code file, sudoku.js. You can also see the initial (before solving) and final Sudoku tables in your browser's console.
-
 ## Authors
 
 **Kostas Karvounis** - [kael89](https://github.com/kael89)

@@ -6,7 +6,7 @@
 
     Colors:
     purple  #764383
-    red     #c94e02
+    magenta #ae0030
     green   #589958
     orange  #c98002
 */
@@ -35,7 +35,7 @@ h2 {
 
 p {
     font-size: 1.2em;
-    color: #c94e02;
+    color: #ae0030;
     margin: 2.5% 0%;
 }
 
@@ -62,7 +62,7 @@ td {
 }
 
 button {
-    color: #c94e02;
+    color: #ae0030;
     background: #f2f0ce;
     font-size: 1.4em;
 }
@@ -85,7 +85,7 @@ input[type=number] {
 
 #intro-message {
     font-size: 1.3em;
-    color: #c94e02;
+    color: #ae0030;
     margin: 2.5% 0%;
 }
 

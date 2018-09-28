@@ -1,30 +1,37 @@
 /***Main Program***/
+// TODO refactor to not use var list
+// TODO remove console.logs
+// TODO create automated test checking
 
-var elSudoku,
-    elSolveBtn,
+var elSolveBtn,
     elClearBtn,
     sudoku;
 
-elSudoku = document.getElementById("sudoku");
 elSolveBtn = document.getElementById("solve");
 elClearBtn = document.getElementById("clear");
-sudoku = new Sudoku();
+sudoku = new SudokuElement('sudoku');
+
+// TODO remove
 //Test cases of different levels are included in js/test-cases.js
 //Uncommenting the next line is an easy way of using a test case::
 //sudoku = getTestCase(4);
 
-createSudoku();
-createButtons();
-elSolveBtn.addEventListener("click", function() { solveSudoku(sudoku) });
-elClearBtn.addEventListener("click", function() { clearSudoku(sudoku) });
+elSolveBtn.addEventListener("click", function() {
+    solveSudoku(sudoku)
+});
+elClearBtn.addEventListener("click", function() {
+    clearSudoku(sudoku)
+});
 
 /***Functions***/
 
 function solveSudoku(sudoku) {
-    var alertMsg;
+    var alertMsg,
+        s;
 
-    alertMsg = "Error" + (errors > 1 ? "s" : "") + " found in your Sudoku.\n" +
-            "Please correct the error(s) before solving the Sudoku"
+    s = (sudoku.errsExist() > 1 ? "s" : "");
+    alertMsg = "Error" + s + " found.\n" +
+            "Please correct the error" + s + " before trying to solve the Sudoku."
     sudoku.consoleOut();
     console.log("---Solve---");
     while (!(sudoku = sudoku.solve())) {
@@ -39,58 +46,10 @@ function clearSudoku(sudoku) {
         i;
 
     userInputs = document.querySelectorAll("input.usr-input");
-    console.log(userInputs.length);
-    for (i = 0; i < userInputs.length; i++) {
+    for (var i = 0; i < userInputs.length; i++) {
         userInputs[i].removeAttribute("class");
     }
 
     sudoku.reset();
     sudoku.print();
-}
-
-function createSudoku() {
-    var elRow,
-        elCell,
-        elInput,
-        dataTag;
-
-    for (i = 1; i <= 9; i++) {
-        elRow = document.createElement("tr");
-        for (j = 1; j <= 9; j++) {
-            elCell = document.createElement("td");
-            dataTag = "data-row='" + i + "' data-col='" + j + "'";
-            elCell.innerHTML = 
-                "<input " + dataTag + " type='number' min='1' max='9'>";
-
-            elInput = elCell.firstChild;
-            elInput.addEventListener("blur", function() {
-                sudoku.setCell(this);
-                setDefaultInputStyle(this);
-            });
-            elInput.addEventListener("focus", function() { 
-                setUserInputStyle(this);
-            });
-
-            elRow.appendChild(elCell);
-        }
-
-        elSudoku.appendChild(elRow);
-    }
-}
-
-function createButtons() {
-    var elParent;
-
-    elParent = elSolveBtn.parentNode;
-    // elParent.style.textAlign = "center";
-}
-
-function setUserInputStyle(elCell) {
-    elCell.className = "usr-input";
-}
-
-function setDefaultInputStyle(elCell) {
-    if (!elCell.value) {
-        elCell.removeAttribute("class");
-    }
 }
