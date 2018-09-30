@@ -5,10 +5,10 @@ function CellErrorManager() {
 
     this.initErrors = function () {
         this.errors = [];
-        for (var i = 1; i <= 9; i++) {
+        for (var i = 0; i <= 9; i++) {
             this.errors[i] = [];
-            for (var j = 1; j <= 9; j++) {
-                this.errors[i][j] = [];
+            for (var j = 0; j <= 9; j++) {
+                this.errors[i][j] = (i > 0 && j > 0) ? [] : null;
             }
         }
     }
@@ -19,10 +19,13 @@ function CellErrorManager() {
 
     this.addErrors = function (cell, errorCells) {
         this.errors[cell.getRow()][cell.getCol()] = errorCells;
-
         cell.addError();
+
+        var currentCell;
         for (var i = 0; i < errorCells.length; i++) {
-            errorCells[i].addError();
+            currentCell = errorCells[i];
+            this.errors[currentCell.getRow()][currentCell.getCol()].push(cell);
+            currentCell.addError();
         }
     }
 
@@ -34,6 +37,8 @@ function CellErrorManager() {
         for (var i = 0; i < errorCells.length; i++) {
             currentCell = errorCells[i];
             currentErrors = this.errors[currentCell.getRow()][currentCell.getCol()];
+
+            currentErrors.splice(currentErrors.indexOf(cell), 1);
             if (!currentErrors.length) {
                 this.removeError(currentCell);
             }

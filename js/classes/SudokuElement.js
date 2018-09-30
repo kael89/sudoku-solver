@@ -1,6 +1,7 @@
 function SudokuElement(id) {
     this.create = function() {
         this.createElement(id);
+        this.validator = new SudokuValidator(this, false);
         this.errorManager = new CellErrorManager();
     }
 

@@ -4,7 +4,7 @@ function Sudoku(cellsIn) {
         var valIn,
             availValsIn;
 
-        this.validator = new SudokuValidator(this, false);
+        this.validator = new SudokuValidator(this);
 
         this.cells = [];
         for (var i = 0; i <= 9; i++) {
