@@ -1,4 +1,4 @@
-/***Main Program***/
+/*** Main Program ***/
 // TODO remove console.logs
 // TODO create automated test checking
 

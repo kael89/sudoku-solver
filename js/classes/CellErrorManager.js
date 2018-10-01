@@ -38,7 +38,7 @@ function CellErrorManager() {
             currentCell = errorCells[i];
             currentErrors = this.errors[currentCell.getRow()][currentCell.getCol()];
 
-            currentErrors.splice(currentErrors.indexOf(cell), 1);
+            removeItem(currentErrors, cell);
             if (!currentErrors.length) {
                 this.removeError(currentCell);
             }

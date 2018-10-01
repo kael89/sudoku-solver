@@ -62,10 +62,7 @@ function CellElement(row, col) {
     }
 
     this.removeObserver = function (observer) {
-        var index = this.observers.indexOf(observer);
-        if (index !== -1) {
-            this.observers.splice(index, 1);
-        }
+        removeItem(this.observers, observer);
     }
 
     this.notifyObservers = function () {

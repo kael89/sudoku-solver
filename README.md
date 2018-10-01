@@ -1,5 +1,4 @@
 # Sudoku Solver
-
 Live system version: https://sudoku-solver-kael89.herokuapp.com/
 
 This project is a web page which can solve a Sudoku problem. The user enters the desired values in the Sudoku cells, and after pushing the "Solve" button they can see the result in the page. 
@@ -15,14 +14,14 @@ The program also detects errors in the user input, e.g. same number in the same 
 </p>
 
 ## Installing
-
 Just clone/download the project files, and run sudoku-solver.html at your browser of choice.
 
-## Authors
+## Running the tests
+TODO write instructions
 
+## Authors
 **Kostas Karvounis** - [kael89](https://github.com/kael89)
 
 ## License
-
 This project is licensed under the GNU General Public License v3.0
 

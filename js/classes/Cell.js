@@ -1,8 +1,9 @@
 function Cell(val, row, col, availValues) {
     // TODO remove input params, use setters instead
     // TODO refactor to use this
-    // Boolean array stating whether a number is available for the given cell. 
-    var availVals;
+    // Boolean array stating whether a number is available for the given cell.
+
+    // TODO 1-10 REFACTOR this.availVals
 
     this.create = function () {
         this.setVal(val);
@@ -22,7 +23,7 @@ function Cell(val, row, col, availValues) {
         if (val >= 1 && val <= 9) {
             // TODO does it cause problems with invalid numbers ( > 9)?
             this.val = val;
-            availVals = [];
+            this.availVals = [];
         }
     }
 
@@ -47,7 +48,7 @@ function Cell(val, row, col, availValues) {
     }
 
     this.getAvailVals = function () {
-        return availVals;
+        return this.availVals;
     }
 
     this.getSqrNumber = function () {
@@ -56,24 +57,12 @@ function Cell(val, row, col, availValues) {
 
     // Excludes a given number from the available cell values
     this.exclude = function (num) {
-        availVals[num] = false;
+        this.removeItem(this.availVals, num);
     }
 
     // Returns the number of available values
     this.availValsCount = function () {
-        var count = 0;
-
-        if (!availVals) {
-            return count;
-        }
-
-        for (var i = 1; i <= 9; i++) {
-            if (availVals[i]) {
-                count++;
-            }
-        }
-
-        return count;
+        return this.availVals.length;
     }
 
     // Returns the first number that is available for the cell, or 0 is there is none
