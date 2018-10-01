@@ -49,7 +49,6 @@ function CellElement(row, col) {
         this.removeClass("wrong-input");
     }
 
-    // TODO replace by explicit calls to either addError() or removeError()
     this.update = function (hasError) {
         if (hasError) {
             this.addError();
@@ -76,7 +75,6 @@ function CellElement(row, col) {
     }
 
     this.addEventListeners = function () {
-        // TODO check if event is correct for value change
         var self = this;
 
         this.el.addEventListener('focus', function () {
@@ -86,13 +84,13 @@ function CellElement(row, col) {
             self.losesFocus();
         })
 
+        // TODO check if event is correct for value change
         this.el.addEventListener('change', function () {
             self.setVal(self.el.value);
             self.notifyObservers();
         })
     }
 
-    // TODO params required in create ?
     this.create();
 }
 

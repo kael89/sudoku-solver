@@ -1,13 +1,10 @@
 function Cell(val, row, col, availValues) {
     // TODO remove input params, use setters instead
     // TODO refactor to use this
-        //Boolean array stating whether a number is available for the given cell. 
-        //For example, if availVals[2] == false, then 2 is not an available value
+    // Boolean array stating whether a number is available for the given cell. 
     var availVals;
 
     this.create = function () {
-        var i;
-
         this.setVal(val);
         this.row = row;
         this.col = col;
@@ -15,7 +12,7 @@ function Cell(val, row, col, availValues) {
 
         /*
         // TODO check
-        for (i = 1; i <= 9; i++) {
+        for (var i = 1; i <= 9; i++) {
             !availValues ? availVals[i] = true : availVals[i] = availValues[i];
         }
         */
@@ -57,41 +54,41 @@ function Cell(val, row, col, availValues) {
         return this.sqrNumber;
     }
 
-    //Excludes a given number from the available cell values
+    // Excludes a given number from the available cell values
     this.exclude = function (num) {
         availVals[num] = false;
     }
 
-    //Returns the number of available values
+    // Returns the number of available values
     this.availValsCount = function () {
-        var count,
-            i;
+        var count = 0;
 
-        count = 0;
+        if (!availVals) {
+            return count;
+        }
 
-        if (availVals) {
-            for (var i = 1; i <= 9; i++)
-                if (availVals[i])
-                    count++;
+        for (var i = 1; i <= 9; i++) {
+            if (availVals[i]) {
+                count++;
+            }
         }
 
         return count;
     }
 
-    //Returns the first number that is available for the cell, or 0 is there is 
-    //none
+    // Returns the first number that is available for the cell, or 0 is there is none
     this.firstAvailVal = function () {
-        var i;
-
-        for (var i = 1; i <= 9; i++)
-            if (availVals[i])
+        for (var i = 1; i <= 9; i++) {
+            if (availVals[i]) {
                 return i;
+            }
+        }
 
         return 0;
     }
 
     // TODO remove testing functions
-    //(Testing) Prints out current cell values 
+    // (Testing) Prints out current cell values 
     this.test = function () {
         this.val ? console.log(this.val) : console.log(availVals);
     }

@@ -20,7 +20,7 @@ function SudokuElement(id) {
         for (var j = 1; j <= 9; j++) {
             // Add new cell object
             cell = this.createCell(row, j);
-            this.setCell(cell, row, j);
+            this.setCell(cell);
 
             // Append cell element
             elCellContainer = this.createCellContainer();
