@@ -96,8 +96,12 @@ function SudokuSolver(sudoku) {
 
     /**
      * Solution strategy:
+     * ------------------
      * 1. Apply Sudoku rules to eliminate available values on empty cells
-     * 2. Assume TODO continue
+     * 2. If empty cells still exist, make assumptions for their values
+     * 3. If the assumed values lead to a invalid Sudoku, reject them and continue
+     *    with new assumptions
+     * 4. Repeat steps 1-3 till the Sudoku is filled with valid values
      */
     this.solve = function () {
         // Apply rules to all cells
@@ -107,11 +111,8 @@ function SudokuSolver(sudoku) {
             }
         }
         this.sudoku.log();
-        console.log('$$$$$$$$$$$$$$$')
         // If Sudoku got filled and is valid, return it; else stop solving it (has invalid cells)
         if (this.sudoku.isFull()) {
-            console.log('is full')
-            console.log('is valid:' + this.sudoku.isValid())
             return this.sudoku.isValid() ? this.sudoku : null;
         }
 

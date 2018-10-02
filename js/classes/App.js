@@ -24,21 +24,19 @@ function App() {
     }
 
     this.solveSudoku = function() {
-        var alertMsg;
-        while (!this.sudoku.isValid()) {
-            alertMsg = 'Invalid values found. Please correct them before trying to solve the Sudoku.';
-            window.alert(alertMsg);
+        if (!this.sudoku.isValid()) {
+            window.alert('Invalid values found. Please correct them before trying to solve the Sudoku.');
+            return;
         }
     
         var solvedSudoku = new SudokuSolver(this.sudoku).solve();
-        if (solvedSudoku) {
-            // TODO copy values to SudokuElement
-            this.sudoku = solvedSudoku;
-            this.renderSudoku();
-        } else {
-            alertMsg = 'Error: could not solve the provided Sudoku';
-            window.alert(alertMsg);
+        if (!solvedSudoku) {
+            window.alert('Error: could not solve the provided Sudoku');
         }
+
+        // TODO copy values to SudokuElement
+        this.sudoku = solvedSudoku;
+        this.renderSudoku();
     }
 
     this.create();

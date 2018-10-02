@@ -6,7 +6,6 @@ function CellElement(row, col) {
     }
 
     this.createElement = function () {
-        // TODO data-row and data-col useful after refactoring?
         this.row = row;
         this.col = col;
 
@@ -14,8 +13,6 @@ function CellElement(row, col) {
         this.el.setAttribute('type', 'number');
         this.el.setAttribute('min', 1);
         this.el.setAttribute('max', 9);
-        this.el.setAttribute('data-row', this.row);
-        this.el.setAttribute('data-col', this.col);
     }
 
     this.gainsFocus = function () {
