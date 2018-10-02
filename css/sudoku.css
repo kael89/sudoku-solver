@@ -51,14 +51,14 @@ tr:nth-child(3), tr:nth-child(6) {
     border-bottom: 2px solid #764383;
 }
 
-td:nth-child(3), td:nth-child(6) {
-    border-right: 2px solid #764383;
-}
-
 td {
     width: 11%;
     height: 11%;
     text-align: center;
+}
+
+td:nth-child(3), td:nth-child(6) {
+    border-right: 2px solid #764383;
 }
 
 button {

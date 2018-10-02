@@ -32,14 +32,14 @@ function SudokuValidator(sudoku, lazyMode) {
         }
 
         // Add same square cells. Ignore cells already added before (same row or column)
-        var sqrStartCoordinates = calculateSqrStartCoordinates(cell.getSqrNumber());
-        var rowStart = sqrStartCoordinates[0];
-        var colStart = sqrStartCoordinates[1];
-        for (i = rowStart; i <= rowStart + 2; i++) {
+        var sqrStartRow = cell.getSqrStartRow();
+        var sqrStartCol = cell.getSqrStartCol();
+        for (i = sqrStartRow; i <= sqrStartRow + 2; i++) {
             if (i === row) {
                 continue;
             }
-            for (j = colStart; j <= colStart + 2; j++) {
+
+            for (j = sqrStartCol; j <= sqrStartCol + 2; j++) {
                 if (j !== col) {
                     cellsToCheck.push(this.getCell(i, j));
                 }

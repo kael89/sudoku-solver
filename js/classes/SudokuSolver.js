@@ -1,46 +1,42 @@
-function SudokuSolver(sudoku) {
-    this.create = function () {
-        this.sudoku = sudoku;
-    }
+function SudokuSolver() {
+    this.create = function () { }
 
     // Applies the basic Sudoku rules to each undefined cell:
-    // a) No duplicate values in the same row
-    // b) No duolicate values in the same column
-    // c) No duplicate values in the same square
+    // No duplicate values in the same row, column and square
     // Returns true in case there were changes in cell values, and false otherwise
+    // TODO refactor to use cell?
     this.applyRules = function (row, col) {
-        var val = this.cells[row][col].getVal();
-        var sqrStart = getSqrStart(row, col);
-        var rowStart = sqrStart[0];
-        var colStart = sqrStart[1];
+        var cell = this.getCell(row, col);
+        var val = cell.getVal();
 
-        // Exclude from the same row.
+        // Exclude from the same row
+        var currentCell;
         for (var j = 1; j <= 9; j++) {
-            this.exclude(val, row, j);
+            currentCell = new Cell(row, j);
+            this.excludeVal(cell, val);
         }
 
-        // Exclude from the same column. 
+        // Exclude from the same column
         for (var i = 1; i <= 9; i++) {
-            this.exclude(val, i, col);
+            currentCell = new Cell(i, col);
+            this.excludeVal(cell, val);
         }
 
-        // Exclude from the same row square
-        for (i = rowStart; i <= rowStart + 2; i++) {
-            for (j = colStart; j <= colStart + 2; j++) {
-                this.exclude(val, i, j);
+        // Exclude from the same square
+        var sqrStartRow = cell.getSqrStartRow();
+        var sqrStartCol = scell.getSqrStartCol();
+        for (i = sqrStartRow; i <= sqrStartRow + 2; i++) {
+            for (j = sqrStartCol; j <= sqrStartCol + 2; j++) {
+                this.excludeVal(cell, i, j);
             }
         }
     }
 
-    this.exclude = function (val, row, col) {
-        var cell = this.cells[row][col];
-        if (cell.getVal()) {
-            return;
-        }
-
-        cell.exclude(val);
+    this.excludeVal = function (cell, val) {
+        cell.excludeVal(val);
         if (cell.availValsCount() === 1) {
-            var newVal = cell.firstAvailVal();
+            var newVal = cell.getNextAvailVal();
+            // TODO move to cell?
             setCellVal(newVal, row, col);
         }
     }
@@ -48,7 +44,7 @@ function SudokuSolver(sudoku) {
     // Returns an array ("cell[3]") with the position and value of the next
     // available cell. We pick the first available value of the first cell with
     // the minimum number of available values in the Sudoku
-    this.findAvailVal = function () {
+    this.assumeVal = function () {
         var count;
         var cell = [];
         var min = 10;
@@ -64,7 +60,7 @@ function SudokuSolver(sudoku) {
                         min = count;
                         cell[0] = i;
                         cell[1] = j;
-                        cell[2] = this.cells[i][j].firstAvailVal();
+                        cell[2] = this.cells[i][j].getNextAvailVal();
                     }
                 }
             }
@@ -99,6 +95,7 @@ function SudokuSolver(sudoku) {
         return true;
     }
 
+    // TODO input params ? what for?
     this.solve = function (val, row, col) {
         // TODO delete variable definitions below ?
         var row;
@@ -130,13 +127,16 @@ function SudokuSolver(sudoku) {
             } else if (this.isFilled()) {
                 return this;
             } else {
+                // TODO create new validator instaed of sudoku
+                newSudoku = new Sudoku(this.cells).solve(val, row, col);
+                
+
                 newCell = this.findAvailVal();
                 row = newCell[0];
                 col = newCell[1];
                 val = newCell[2];
 
-                newSudoku = new Sudoku(this.cells).solve(val, row, col);
-                this.exclude(val, row, col);
+                this.excludeVal(val, row, col);
             }
         } while (!newSudoku);
 

@@ -46,16 +46,11 @@ function Sudoku(cellsIn) {
 
     // TODO check if working
     this.reset = function () {
-        create();
+        this.create();
     }
 
     this.validate = function (cell) {
         return this.validator.validate(cell);
-    }
-
-    this.solve = function () {
-        // TODO implement
-        this.solver.solve();
     }
 
     this.print = function () {
@@ -72,24 +67,19 @@ function Sudoku(cellsIn) {
         }
     }
 
-    // TODO move
-    // (Debugging) Prints the current Sudoku in the console
-    this.consoleOut = function () {
+    // Prints the current Sudoku in the console
+    this.log = function () {
         var val;
         var str;
 
         console.log('Sudoku:');
-
         for (var i = 1; i <= 9; i++) {
             // Line numbering, using lowercase chars (a - i)
             str = '(' + String.fromCharCode(96 + i) + ')  ';
 
             for (var j = 1; j <= 9; j++) {
-                if (val = this.cells[i][j].getVal()) {
-                    str += val + '  ';
-                } else {
-                    str += '   ';
-                }
+                val = this.cells[i][j].getVal();
+                str += val ? val + '  ' : '   ';
 
                 if (j === 3 || j === 6) {
                     str += '|  '
@@ -100,61 +90,8 @@ function Sudoku(cellsIn) {
             if (i === 3 || i === 6) {
                 console.log('    --------------------------------');
             }
-
         }
-
         console.log('');
-    }
-
-    /*** Testing ***/
-    // (Testing) Sets the Sudoku values TODO DRY?
-    this.setFromArray = function (arr) {
-        var val;
-        for (var i = 1; i <= 9; i++) {
-            for (var j = 1; j <= 9; j++) {
-                if (val = arr[i][j]) {
-                    if (!validateRow(val, i, j)) {
-                        console.log('Row error with number ' + val + ' at row ' + i);
-                        return;
-                    }
-                    if (!validateCol(val, i, j)) {
-                        console.log('Column error with number ' + val + ' at column ' + j);
-                        return;
-                    }
-                    if (!validateSqr(val, i, j)) {
-                        console.log('Square error with number ' + val + ' at (' + row + ', ' + col + ')');
-                        return;
-                    }
-                    this.cells[i][j] = new Cell(val);
-                }
-                else {
-                    this.cells[i][j] = new Cell();
-                }
-            }
-        }
-    }
-
-    // (Testing) Prints out cell value in the given row, column
-    this.testCell = function (row, col) {
-        console.log('Row: ' + row + ', Column: ' + col);
-        this.cells[row][col].test();
-    }
-
-
-    // (Testing) Prints out cell values in the given row
-    this.testRow = function (row) {
-        console.log('Row ' + row);
-        for (var j = 1; j <= 9; j++) {
-            this.cells[row][j].test();
-        }
-    }
-
-    // (Testing) Prints out cell values in the given column
-    this.testColumn = function (col) {
-        console.log('Column ' + col);
-        for (var i = 1; i <= 9; i++) {
-            this.cells[i][col].test();
-        }
     }
 
     this.create();

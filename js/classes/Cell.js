@@ -1,22 +1,21 @@
-function Cell(val, row, col, availValues) {
-    // TODO remove input params, use setters instead
-    // TODO refactor to use this
-    // Boolean array stating whether a number is available for the given cell.
-
-    // TODO 1-10 REFACTOR this.availVals
-
+function Cell(val, row, col) {
     this.create = function () {
+        this.resetAvailVals();
         this.setVal(val);
         this.row = row;
         this.col = col;
-        this.sqrNumber = calculateSqrNumber(row, col);
+        this.initSqrStartCoordinates(row, col);
+    }
 
-        /*
-        // TODO check
-        for (var i = 1; i <= 9; i++) {
-            !availValues ? availVals[i] = true : availVals[i] = availValues[i];
+    this.resetAvailVals = function () {
+        this.availVals = [];
+        if (this.val) {
+            return;
         }
-        */
+
+        for (var i = 1; i <= 9; i++) {
+            this.availVals.push(i);
+        }
     }
 
     this.setVal = function (val) {
@@ -51,13 +50,9 @@ function Cell(val, row, col, availValues) {
         return this.availVals;
     }
 
-    this.getSqrNumber = function () {
-        return this.sqrNumber;
-    }
-
-    // Excludes a given number from the available cell values
-    this.exclude = function (num) {
-        this.removeItem(this.availVals, num);
+    // Removes a given number from the available cell values
+    this.excludeVal = function (val) {
+        this.removeItem(this.availVals, val);
     }
 
     // Returns the number of available values
@@ -66,20 +61,24 @@ function Cell(val, row, col, availValues) {
     }
 
     // Returns the first number that is available for the cell, or 0 is there is none
-    this.firstAvailVal = function () {
-        for (var i = 1; i <= 9; i++) {
-            if (availVals[i]) {
-                return i;
-            }
-        }
-
-        return 0;
+    this.getNextAvailVal = function () {
+        return (this.availValsCount() > 0) ? this.availVals[0] : 0;
     }
 
-    // TODO remove testing functions
-    // (Testing) Prints out current cell values 
-    this.test = function () {
-        this.val ? console.log(this.val) : console.log(availVals);
+    this.initSqrStartCoordinates = function (row, col) {
+        var horizontalTier = Math.floor((row - 1) / 3);
+        this.sqrStartRow = 3 * horizontalTier + 1;
+
+        var verticalTier = Math.floor((col - 1) / 3) + 1;
+        this.sqrStartCol = 3 * verticalTier + 1;
+    }
+
+    this.getSqrStartRow = function () {
+        return this.sqrStartRow;
+    }
+
+    this.getSqrStartCol = function () {
+        return this.sqrStartCol;
     }
 
     this.create();

@@ -1,15 +1,18 @@
-function SudokuElement(id) {
+function SudokuElement() {
     this.create = function() {
-        this.createElement(id);
         this.validator = new SudokuValidator(this, false);
         this.errorManager = new CellErrorManager();
     }
 
-    this.createElement = function (id) {
-        this.el = document.getElementById(id);
+    this.render = function (containerId) {
+        this.el = document.createElement('table');
         for (var i = 1; i <= 9; i++) {
             this.el.appendChild(this.createRow(i));
         }
+
+        var elContainer = document.getElementById(containerId);
+        elContainer.innerHTML = '';
+        elContainer.appendChild(this.el);
     }
 
     this.createRow = function (row) {

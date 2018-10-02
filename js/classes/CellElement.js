@@ -1,7 +1,6 @@
 function CellElement(row, col) {
     this.create = function () {
         this.createElement(row, col);
-        this.sqrNumber = calculateSqrNumber(row, col);
         this.addEventListeners();
         this.observers = [];
     }
@@ -11,7 +10,7 @@ function CellElement(row, col) {
         this.row = row;
         this.col = col;
 
-        this.el = document.createElement("input");
+        this.el = document.createElement('input');
         this.el.setAttribute('type', 'number');
         this.el.setAttribute('min', 1);
         this.el.setAttribute('max', 9);
@@ -42,11 +41,11 @@ function CellElement(row, col) {
     }
 
     this.addError = function () {
-        this.addClass("wrong-input");
+        this.addClass('wrong-input');
     }
 
     this.removeError = function () {
-        this.removeClass("wrong-input");
+        this.removeClass('wrong-input');
     }
 
     this.update = function (hasError) {
