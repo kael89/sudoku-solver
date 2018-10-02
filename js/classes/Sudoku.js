@@ -1,16 +1,9 @@
-// TODO refactor to use setter for cellsIns, valIn, availValsIn
-function Sudoku(cellsIn) {
+function Sudoku() {
     this.create = function () {
-        var valIn;
-        var availValsIn;
-
         this.cells = [];
         for (var i = 0; i <= 9; i++) {
             this.cells[i] = [];
             for (var j = 0; j <= 9; j++) {
-                // TODO refactor below
-                // valIn = cellsIn[i][j].getVal();
-                // cells[i][j] = new Cell(valIn, availValsIn);
                 this.cells[i][j] = (i > 0 && j > 0) ? new Cell() : null;
             }
         }
@@ -39,9 +32,11 @@ function Sudoku(cellsIn) {
     }
 
     this.isValid = function () {
+        var invalidCells;
         for (var i = 1; i <= 9; i++) {
             for (var j = 1; j <= 9; j++) {
-                if (SudokuValidator.getInvalidCells(this, this.cells[i][j])) {
+                invalidCells = SudokuValidator.getInvalidCells(this, this.cells[i][j]);
+                if (invalidCells.length) {
                     return false;
                 }
             }
@@ -54,7 +49,7 @@ function Sudoku(cellsIn) {
         var newSudoku = new Sudoku();
 
         var newCell;
-        for (var i = 0; i <= 9; i ++) {
+        for (var i = 0; i <= 9; i++) {
             for (var j = 0; j <=9; j++) {
                 newCell = this.cells[i][j].clone();
                 newSudoku.setCell(newCell);

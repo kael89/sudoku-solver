@@ -44,7 +44,7 @@ function Cell(val, row, col) {
 
     // Removes a given number from the available cell values
     this.excludeVal = function (val) {
-        this.removeItem(this.availVals, val);
+        removeItem(this.availVals, val);
     }
 
     // Returns the number of available values
@@ -61,7 +61,7 @@ function Cell(val, row, col) {
         var horizontalTier = Math.floor((row - 1) / 3);
         this.sqrStartRow = 3 * horizontalTier + 1;
 
-        var verticalTier = Math.floor((col - 1) / 3) + 1;
+        var verticalTier = Math.floor((col - 1) / 3);
         this.sqrStartCol = 3 * verticalTier + 1;
     }
 

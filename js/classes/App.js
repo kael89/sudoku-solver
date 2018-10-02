@@ -16,21 +16,21 @@ function App() {
     this.addEventListeners = function () {
         var self = this;
         document.getElementById('solve').addEventListener('click', function() {
-            self.solveSudoku(sudoku);
+            self.solveSudoku();
         });
         document.getElementById('clear').addEventListener('click', function() {
             self.resetSudoku();
         });
     }
 
-    this.solveSudoku = function(sudoku) {
+    this.solveSudoku = function() {
         var alertMsg;
-        while (!sudoku.isValid()) {
+        while (!this.sudoku.isValid()) {
             alertMsg = 'Invalid values found. Please correct them before trying to solve the Sudoku.';
             window.alert(alertMsg);
         }
     
-        var solvedSudoku = new SudokuSolver(sudoku).solve();
+        var solvedSudoku = new SudokuSolver(this.sudoku).solve();
         if (solvedSudoku) {
             // TODO copy values to SudokuElement
             this.sudoku = solvedSudoku;

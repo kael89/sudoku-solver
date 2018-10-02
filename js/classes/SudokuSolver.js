@@ -1,5 +1,5 @@
-function SudokuSolver() {
-    this.create = function (sudoku) {
+function SudokuSolver(sudoku) {
+    this.create = function () {
         this.sudoku = sudoku;
         this.assumedCell = null;
     }
@@ -8,11 +8,16 @@ function SudokuSolver() {
         return this.sudoku.getCell(row, col);
     }
 
-    // Applies the basic Sudoku rules to each undefined cell:
-    // No duplicate values in the same row, column and square
-    // Returns true in case there were changes in cell values, and false otherwise
+    /**
+     * Applies the Sudoku rules to each undefined cell:
+     * No duplicate values in the same row, column and square
+     * 
+     * @param {Cell} cell 
+     */
     this.applyRules = function (cell) {
         var val = cell.getVal();
+        var row = cell.getRow();
+        var col = cell.getCol();
 
         // Exclude from the same row
         for (var j = 1; j <= 9; j++) {
@@ -26,7 +31,7 @@ function SudokuSolver() {
 
         // Exclude from the same square
         var sqrStartRow = cell.getSqrStartRow();
-        var sqrStartCol = scell.getSqrStartCol();
+        var sqrStartCol = cell.getSqrStartCol();
         for (i = sqrStartRow; i <= sqrStartRow + 2; i++) {
             for (j = sqrStartCol; j <= sqrStartCol + 2; j++) {
                 this.excludeVal(this.getCell(i, j), val);
@@ -53,8 +58,7 @@ function SudokuSolver() {
     }
 
     /**
-     * Returns the cell with the minimum count of available values
-     * in order to assume its value
+     * Returns the cell with the minimum count of available values, in order to assume its value
      */
     this.findCellToAssume = function () {
         var minCount = 10;
@@ -99,11 +103,15 @@ function SudokuSolver() {
         // Apply rules to all cells
         for (var i = 1; i <=9; i++) {
             for (var j = 1; j <= 9; j++) {
-                this.applyRules();
+                this.applyRules(this.getCell(i, j));
             }
         }
+        this.sudoku.log();
+        console.log('$$$$$$$$$$$$$$$')
         // If Sudoku got filled and is valid, return it; else stop solving it (has invalid cells)
         if (this.sudoku.isFull()) {
+            console.log('is full')
+            console.log('is valid:' + this.sudoku.isValid())
             return this.sudoku.isValid() ? this.sudoku : null;
         }
 

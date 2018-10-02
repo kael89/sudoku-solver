@@ -5,6 +5,7 @@ var resultMsg;
 var testCount = testCases.length;
 
 var allPassed = true;
+var index;
 for (var i = 0; i < testCount; i++) {
     if (runTestCase(testCases[i])) {
         resultMsg = 'Success';
@@ -13,7 +14,8 @@ for (var i = 0; i < testCount; i++) {
         allPassed = false;
     }
 
-    print('Test 1/' + testCount + ': ' + resultMsg);
+    index = i + 1;
+    print('Test ' + index + '/' + testCount + ': ' + resultMsg);
 }
 
 var resultMsg = allPassed ? 'All tests passed!' : 'At least one test failed...';
@@ -31,23 +33,29 @@ function printHr() {
 }
 
 function runTestCase(testCase) {
-    sudoku = new Sudoku();
+    var sudoku = new Sudoku();
 
     var cell;
-    for (var i = 0; i < 9; i ++) {
+    for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
             // Test cases indices start from 0, while class indices start from 1
-            // TODO propably overwriting same space in memory
-            // TODO ensure that 0 cells are ignored
             cell = new Cell(testCase.in[i][j], i + 1, j + 1);
             sudoku.setCell(cell);
         }
     }
+    sudoku.log();
 
-    var solvedSudoku = sudoku.solve();
-    for (var i = 0; i < 9; i ++) {
+    var solver = new SudokuSolver(sudoku);
+    var solvedSudoku = solver.solve();
+    if (!solvedSudoku) {
+        return false;
+    }
+
+    var currentCell;
+    for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            if (solvedSudoku.getCell(i + 1, j + 1) !== testCase.out[i][j]) {
+            currentCell = solvedSudoku.getCell(i + 1, j + 1);
+            if (!currentCell || currentCell.getVal() !== testCase.out[i][j]) {
                 return false;
             }
         }
