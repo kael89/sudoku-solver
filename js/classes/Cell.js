@@ -42,27 +42,19 @@ function Cell(val, row, col) {
         return this.col;
     }
 
-    this.setAvailVals = function (availVals) {
-        this.availVals = availVals;
-    }
-
-    this.getAvailVals = function () {
-        return this.availVals;
-    }
-
     // Removes a given number from the available cell values
     this.excludeVal = function (val) {
         this.removeItem(this.availVals, val);
     }
 
     // Returns the number of available values
-    this.availValsCount = function () {
+    this.getAvailValsCount = function () {
         return this.availVals.length;
     }
 
     // Returns the first number that is available for the cell, or 0 is there is none
     this.getNextAvailVal = function () {
-        return (this.availValsCount() > 0) ? this.availVals[0] : 0;
+        return (this.getAvailValsCount() > 0) ? this.availVals[0] : 0;
     }
 
     this.initSqrStartCoordinates = function (row, col) {
@@ -79,6 +71,12 @@ function Cell(val, row, col) {
 
     this.getSqrStartCol = function () {
         return this.sqrStartCol;
+    }
+
+    this.clone = function () {
+        var newCell = new Cell(this.val, this.row, this.col);
+        newCell.availVals = this.availVals.splice();
+        return newCell;
     }
 
     this.create();

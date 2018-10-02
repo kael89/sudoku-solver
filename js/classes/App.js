@@ -25,14 +25,14 @@ function App() {
 
     this.solveSudoku = function(sudoku) {
         var alertMsg;
-        while (!sudoku.validate()) {
-            var s = (sudoku.errsExist() > 1 ? 's' : '');
-            alertMsg = 'Error' + s + ' found.\nPlease correct the error' + s + ' before trying to solve the Sudoku.';
+        while (!sudoku.isValid()) {
+            alertMsg = 'Invalid values found. Please correct them before trying to solve the Sudoku.';
             window.alert(alertMsg);
         }
     
-        var solvedSudoku = solver.solve(sudoku);
+        var solvedSudoku = new SudokuSolver(sudoku).solve();
         if (solvedSudoku) {
+            // TODO copy values to SudokuElement
             this.sudoku = solvedSudoku;
             this.renderSudoku();
         } else {

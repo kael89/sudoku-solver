@@ -4,16 +4,12 @@ function Sudoku(cellsIn) {
         var valIn;
         var availValsIn;
 
-        this.validator = new SudokuValidator(this);
-        this.solver = new SudokuSolver(this);
-
         this.cells = [];
         for (var i = 0; i <= 9; i++) {
             this.cells[i] = [];
             for (var j = 0; j <= 9; j++) {
                 // TODO refactor below
                 // valIn = cellsIn[i][j].getVal();
-                // availValsIn = cellsIn[i][j].getAvailVals();
                 // cells[i][j] = new Cell(valIn, availValsIn);
                 this.cells[i][j] = (i > 0 && j > 0) ? new Cell() : null;
             }
@@ -30,27 +26,42 @@ function Sudoku(cellsIn) {
         return this.cells[row][col];
     }
 
-    this.getCells = function () {
-        return this.cells;
+    this.isFull = function () {
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                if (!this.getCell(i, j).getVal()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
-    // TODO refactor to use Cell object / SudokuSolver
-    function setCellVal(val, row, col) {
-        this.cells[row][col].setVal(val);
-        applyRules(row, col);
+    this.isValid = function () {
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                if (SudokuValidator.getInvalidCells(this, this.cells[i][j])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
-    this.errsExist = function () {
-        return errors;
-    }
+    this.clone = function () {
+        var newSudoku = new Sudoku();
 
-    // TODO check if working
-    this.reset = function () {
-        this.create();
-    }
+        var newCell;
+        for (var i = 0; i <= 9; i ++) {
+            for (var j = 0; j <=9; j++) {
+                newCell = this.cells[i][j].clone();
+                newSudoku.setCell(newCell);
+            }
+        }
 
-    this.validate = function (cell) {
-        return this.validator.validate(cell);
+        return newSudoku;
     }
 
     this.print = function () {

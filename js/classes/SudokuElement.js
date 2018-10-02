@@ -1,6 +1,5 @@
 function SudokuElement() {
     this.create = function() {
-        this.validator = new SudokuValidator(this, false);
         this.errorManager = new CellErrorManager();
     }
 
@@ -46,7 +45,8 @@ function SudokuElement() {
 
     this.update = function (obj) {
         if (obj instanceof CellElement) {
-            this.updateErrors(obj, this.validate(obj));
+            var invalidCells = SudokuValidator.getInvalidCells(this, obj, false);
+            this.updateErrors(obj, invalidCells);
         }
     }
 
