@@ -1,10 +1,32 @@
-function Cell(val, row, col) {
+function Cell(row, col, val) {
     this.create = function () {
+        this.setRow(row);
+        this.setCol(col);
         this.resetAvailVals();
         this.setVal(val);
+    }
+
+    this.getRow = function (row) {
+        return this.row;
+    }
+
+    this.setRow = function (row) {
         this.row = row;
+        this.sqrStartRow = this.calculateSqrStart(row);
+    }
+
+    this.getCol = function (col) {
+        return this.col;
+    }
+
+    this.setCol = function (col) {
         this.col = col;
-        this.initSqrStartCoordinates(row, col);
+        this.sqrStartCol = this.calculateSqrStart(col);
+    }
+
+    this.calculateSqrStart = function (lineNumber) {
+        var tier = Math.floor((lineNumber - 1) / 3);
+        return 3 * tier + 1;
     }
 
     this.resetAvailVals = function () {
@@ -19,6 +41,7 @@ function Cell(val, row, col) {
     }
 
     this.setVal = function (val) {
+        val = parseInt(val);
         if (val >= 1 && val <= 9) {
             // TODO does it cause problems with invalid numbers ( > 9)?
             this.val = val;
@@ -32,14 +55,6 @@ function Cell(val, row, col) {
 
     this.hasVal = function () {
         return this.val !== undefined;
-    }
-
-    this.getRow = function (row) {
-        return this.row;
-    }
-
-    this.getCol = function (col) {
-        return this.col;
     }
 
     // Removes a given number from the available cell values
@@ -57,14 +72,6 @@ function Cell(val, row, col) {
         return (this.getAvailValsCount() > 0) ? this.availVals[0] : 0;
     }
 
-    this.initSqrStartCoordinates = function (row, col) {
-        var horizontalTier = Math.floor((row - 1) / 3);
-        this.sqrStartRow = 3 * horizontalTier + 1;
-
-        var verticalTier = Math.floor((col - 1) / 3);
-        this.sqrStartCol = 3 * verticalTier + 1;
-    }
-
     this.getSqrStartRow = function () {
         return this.sqrStartRow;
     }
@@ -74,8 +81,8 @@ function Cell(val, row, col) {
     }
 
     this.clone = function () {
-        var newCell = new Cell(this.val, this.row, this.col);
-        newCell.availVals = this.availVals.splice();
+        var newCell = new Cell(this.row, this.col, this.val);
+        newCell.availVals = this.availVals.slice();
         return newCell;
     }
 

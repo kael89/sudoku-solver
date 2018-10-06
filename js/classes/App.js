@@ -1,16 +1,13 @@
 function App() {
     this.create = function () {
+        this.sudokuElementId =  'sudoku';
         this.resetSudoku();
         this.addEventListeners();
     }
 
     this.resetSudoku = function () {
         this.sudoku = new SudokuElement();
-        this.renderSudoku();
-    }
-
-    this.renderSudoku = function () {
-        this.sudoku.render('sudoku');
+        this.sudoku.render(this.sudokuElementId);
     }
 
     this.addEventListeners = function () {
@@ -23,20 +20,34 @@ function App() {
         });
     }
 
+    this.getSudoku = function () {
+        return this.sudoku;
+    }
+
     this.solveSudoku = function() {
         if (!this.sudoku.isValid()) {
             window.alert('Invalid values found. Please correct them before trying to solve the Sudoku.');
             return;
         }
-    
-        var solvedSudoku = new SudokuSolver(this.sudoku).solve();
+
+        solvedSudoku = new SudokuSolver(this.sudoku).solve();
         if (!solvedSudoku) {
             window.alert('Error: could not solve the provided Sudoku');
+            return;
         }
 
-        // TODO copy values to SudokuElement
-        this.sudoku = solvedSudoku;
-        this.renderSudoku();
+        this.copyCellValues(solvedSudoku, this.sudoku);
+        this.sudoku.refresh(this.sudokuElementId);
+    }
+
+    this.copyCellValues = function (sourceSudoku, targetSudoku) {
+        var newVal;
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                newVal = sourceSudoku.getCell(i, j).getVal();
+                targetSudoku.getCell(i, j).setVal(newVal);
+            }
+        }
     }
 
     this.create();

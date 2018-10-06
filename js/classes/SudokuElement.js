@@ -1,6 +1,37 @@
 function SudokuElement() {
     this.create = function() {
+        Sudoku.call(this);
         this.errorManager = new CellErrorManager();
+    }
+
+    this.createRow = function (row) {
+        var elRow = document.createElement('tr');
+
+        var elCellContainer;
+        var cell;
+        for (var j = 1; j <= 9; j++) {
+            // Create cell container
+            elCellContainer = this.createCellContainer();
+            elRow.appendChild(elCellContainer);
+
+            // Add new cell
+            cell = this.createCell(row, j);
+            cell.render(elCellContainer);
+            this.setCell(cell);
+        }
+
+        return elRow;
+    }
+
+    this.createCell = function (row, col) {
+        // TODO get val already set in order to display it in DOM
+        var cell = new CellElement(row, col, this.cells[row][col].getVal());
+        cell.registerObserver(this);
+        return cell;
+    }
+
+    this.createCellContainer = function () {
+        return document.createElement('td');
     }
 
     this.render = function (containerId) {
@@ -10,42 +41,20 @@ function SudokuElement() {
         }
 
         var elContainer = document.getElementById(containerId);
-        elContainer.innerHTML = '';
-        elContainer.appendChild(this.el);
+        elContainer.replaceChildren(this.el);
     }
 
-    this.createRow = function (row) {
-        var elRow = document.createElement('tr');
-
-        var elCellContainer;
-        var cell;
-        for (var j = 1; j <= 9; j++) {
-            // Add new cell object
-            cell = this.createCell(row, j);
-            this.setCell(cell);
-
-            // Append cell element
-            elCellContainer = this.createCellContainer();
-            elCellContainer.appendChild(cell.getElement());
-            elRow.appendChild(elCellContainer);
+    this.refresh = function () {
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                this.cells[i][j].refresh();
+            }
         }
-
-        return elRow;
-    }
-
-    this.createCell = function (row, col) {
-        var cell = new CellElement(row, col);
-        cell.registerObserver(this);
-        return cell;
-    }
-
-    this.createCellContainer = function () {
-        return document.createElement('td');
     }
 
     this.update = function (obj) {
         if (obj instanceof CellElement) {
-            var invalidCells = SudokuValidator.getInvalidCells(this, obj, false);
+            var invalidCells = SudokuValidator.getInvalidCells(this, obj);
             this.updateErrors(obj, invalidCells);
         }
     }

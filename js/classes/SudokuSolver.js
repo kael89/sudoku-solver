@@ -9,7 +9,7 @@ function SudokuSolver(sudoku) {
     }
 
     /**
-     * Applies the Sudoku rules to each undefined cell:
+     * Applies Sudoku rules to each undefined cell
      * No duplicate values in the same row, column and square
      * 
      * @param {Cell} cell 
@@ -51,10 +51,22 @@ function SudokuSolver(sudoku) {
         return new SudokuSolver(this.sudoku.clone());
     }
 
+    this.isOriginalVariation = function () {
+        return (this.assumedCell !== null);
+    }
+
     this.createNewVariation = function () {
         var newSolver = this.clone();
-        newSolver.makeCellAssumtion();
+        newSolver.makeCellAssumption();
         return newSolver;
+    }
+
+    this.makeCellAssumption = function () {
+        var assumedCell = this.findCellToAssume();
+        assumedCell.setVal(assumedCell.getNextAvailVal());
+        this.assumedCell = assumedCell;
+
+        this.applyRules(assumedCell);
     }
 
     /**
@@ -67,7 +79,7 @@ function SudokuSolver(sudoku) {
         var currentCell;
         for (var i = 1; i <= 9; i++) {
             for (var j = 1; j <= 9; j++) {
-                currentCell = this.getCells(i, j);
+                currentCell = this.getCell(i, j);
                 if (currentCell.hasVal()) {
                     continue;
                 }
@@ -83,19 +95,13 @@ function SudokuSolver(sudoku) {
         return assumedCell;
     }
 
-    this.makeCellAssumtion = function () {
-        this.assumedCell = this.findCellToAssume();
-        var assumedVal = this.assumedCell.getNextAvailVal();
-        this.assumedCell.setVal(assumedVal);
-    }
-
     this.rejectCellAssumption = function (assumedCell) {
         var originalCell = this.getCell(assumedCell.getRow(), assumedCell.getCol());
-        originalCell.excludeVal(assumedCell.getVal());
+        this.excludeVal(originalCell, assumedCell.getVal());
     }
 
     /**
-     * Solution strategy:
+     * Solution strategy
      * ------------------
      * 1. Apply Sudoku rules to eliminate available values on empty cells
      * 2. If empty cells still exist, make assumptions for their values
@@ -104,25 +110,34 @@ function SudokuSolver(sudoku) {
      * 4. Repeat steps 1-3 till the Sudoku is filled with valid values
      */
     this.solve = function () {
-        // Apply rules to all cells
-        for (var i = 1; i <=9; i++) {
-            for (var j = 1; j <= 9; j++) {
-                this.applyRules(this.getCell(i, j));
+        // If this is the original variation, apply rules to all cells
+        // If not there is no reason 
+        if (this.isOriginalVariation()) {
+            for (var i = 1; i <=9; i++) {
+                for (var j = 1; j <= 9; j++) {
+                    this.applyRules(this.getCell(i, j));
+                }
             }
         }
-        this.sudoku.log();
-        // If Sudoku got filled and is valid, return it; else stop solving it (has invalid cells)
-        if (this.sudoku.isFull()) {
-            return this.sudoku.isValid() ? this.sudoku : null;
+
+        if (!this.sudoku.isValid()) {
+            // Sudoku is not valid, stop solving it
+            return null;
+        } else if (this.sudoku.isFull()) {
+            // Sudoku is full and valid, return it
+            return this.sudoku;
         }
 
         var newSolver;
         var newSudoku;
         do {
-            if (newSudoku) {
+            if (newSolver) {
                 // If a variation was created and it was not fully solved, it means
                 // a wrong assumption was made by it, so reject it
-                this.rejectCellAssumption(newSudoku.assumedCell);
+                this.rejectCellAssumption(newSolver.assumedCell);
+                if (this.sudoku.isFull()) {
+                    return this.sudoku.isValid() ? this.sudoku : null;
+                }
             }
 
             newSolver = this.createNewVariation();

@@ -1,27 +1,57 @@
-function CellElement(row, col) {
+function CellElement(row, col, val) {
     this.create = function () {
-        this.createElement(row, col);
-        this.addEventListeners();
+        Cell.call(this, row, col, val)
+        this.isUserInput = false;
         this.observers = [];
     }
 
     this.createElement = function () {
-        this.row = row;
-        this.col = col;
-
+        // Create element
         this.el = document.createElement('input');
         this.el.setAttribute('type', 'number');
         this.el.setAttribute('min', 1);
         this.el.setAttribute('max', 9);
+
+        // Add event listeners
+        var self = this;
+        this.el.addEventListener('focus', function () {
+            self.gainsFocus();
+        })
+        this.el.addEventListener('blur', function () {
+            self.losesFocus();
+        })
+        // TODO check if event is correct for value change
+        this.el.addEventListener('change', function () {
+            self.setVal(self.el.value);
+            self.notifyObservers();
+        })
+    }
+
+    this.render = function (elContainer) {
+        this.createElement();
+        elContainer.replaceChildren(this.el);
+        this.refresh();
+    }
+
+    this.refresh = function () {
+        if (this.val) {
+            this.el.setAttribute('value', this.val);
+        }
+
+        var method = this.isUserInput ? 'addClass' : 'removeClass';
+        this.el[method]('user-input');
     }
 
     this.gainsFocus = function () {
-        this.addClass('usr-input');
+        this.isUserInput = true;
+        this.refresh();
+        this.el.addClass('user-input');
     }
 
     this.losesFocus = function () {
         if (!this.hasVal()) {
-            this.removeClass('usr-input');
+            this.isUserInput = false;
+            this.refresh();
         }
     }
 
@@ -29,20 +59,12 @@ function CellElement(row, col) {
         return this.el;
     }
 
-    this.addClass = function (className) {
-        this.el.classList.add(className);
-    }
-
-    this.removeClass = function (className) {
-        this.el.classList.remove(className);
-    }
-
     this.addError = function () {
-        this.addClass('wrong-input');
+        this.el.addClass('wrong-input');
     }
 
     this.removeError = function () {
-        this.removeClass('wrong-input');
+        this.el.removeClass('wrong-input');
     }
 
     this.update = function (hasError) {
@@ -65,23 +87,6 @@ function CellElement(row, col) {
         for (var i = 0; i < this.observers.length; i++) {
             this.observers[i].update(this);
         }
-    }
-
-    this.addEventListeners = function () {
-        var self = this;
-
-        this.el.addEventListener('focus', function () {
-            self.gainsFocus();
-        })
-        this.el.addEventListener('blur', function () {
-            self.losesFocus();
-        })
-
-        // TODO check if event is correct for value change
-        this.el.addEventListener('change', function () {
-            self.setVal(self.el.value);
-            self.notifyObservers();
-        })
     }
 
     this.create();

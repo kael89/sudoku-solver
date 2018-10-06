@@ -4,7 +4,7 @@ function Sudoku() {
         for (var i = 0; i <= 9; i++) {
             this.cells[i] = [];
             for (var j = 0; j <= 9; j++) {
-                this.cells[i][j] = (i > 0 && j > 0) ? new Cell() : null;
+                this.cells[i][j] = (i > 0 && j > 0) ? new Cell(i, j) : null;
             }
         }
     }
@@ -32,11 +32,9 @@ function Sudoku() {
     }
 
     this.isValid = function () {
-        var invalidCells;
         for (var i = 1; i <= 9; i++) {
             for (var j = 1; j <= 9; j++) {
-                invalidCells = SudokuValidator.getInvalidCells(this, this.cells[i][j]);
-                if (invalidCells.length) {
+                if (!SudokuValidator.validate(this, this.cells[i][j])) {
                     return false;
                 }
             }
@@ -49,28 +47,14 @@ function Sudoku() {
         var newSudoku = new Sudoku();
 
         var newCell;
-        for (var i = 0; i <= 9; i++) {
-            for (var j = 0; j <=9; j++) {
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <=9; j++) {
                 newCell = this.cells[i][j].clone();
                 newSudoku.setCell(newCell);
             }
         }
 
         return newSudoku;
-    }
-
-    this.print = function () {
-        var elCell;
-        var query;
-
-        // TODO refactor to use elements
-        for (var i = 1; i <= 9; i++) {
-            for (var j = 1; j <= 9; j++) {
-                query = 'input[data-row="' + i + '"][data-col="' + j + '"]';
-                elCell = document.querySelector(query);
-                elCell.value = this.cells[i][j].getVal();
-            }
-        }
     }
 
     // Prints the current Sudoku in the console

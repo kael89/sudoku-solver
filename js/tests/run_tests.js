@@ -1,65 +1,70 @@
 print('Running tests...');
 printHr();
 
-var resultMsg;
-var testCount = testCases.length;
+var allTestsPassed = runAllTestCases(testCases);
+var resultMsg = allTestsPassed ? 'All tests passed!' : 'At least one test failed...';
 
-var allPassed = true;
-var index;
-for (var i = 0; i < testCount; i++) {
-    if (runTestCase(testCases[i])) {
-        resultMsg = 'Success';
-    } else {
-        resultMsg = 'Failure';
-        allPassed = false;
-    }
-
-    index = i + 1;
-    print('Test ' + index + '/' + testCount + ': ' + resultMsg);
-}
-
-var resultMsg = allPassed ? 'All tests passed!' : 'At least one test failed...';
 printHr();
 print(resultMsg);
 
 /*** Functions ***/
-function print(message) {
-    console.log(message);
-}
+function runAllTestCases(testCases) {
+    var testCount = testCases.length;
 
-// Printa a horizontal rule
-function printHr() {
-    print('-------------------------');
+    var allTestsPassed = true;
+    var index;
+    for (var i = 0; i < testCount; i++) {
+        if (runTestCase(testCases[i])) {
+            resultMsg = 'Success';
+        } else {
+            resultMsg = 'Failure';
+            allTestsPassed = false;
+        }
+
+        index = i + 1;
+        print('Test ' + index + '/' + testCount + ': ' + resultMsg);
+    }
+
+    return allTestsPassed;
 }
 
 function runTestCase(testCase) {
-    var sudoku = new Sudoku();
+    var elCells = document.getElementById('sudoku').getElementsByTagName('input');
 
-    var cell;
+    var k = 0;
+    var currentVal;
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            // Test cases indices start from 0, while class indices start from 1
-            cell = new Cell(testCase.in[i][j], i + 1, j + 1);
-            sudoku.setCell(cell);
+            currentVal = testCase.in[i][j];
+            if (currentVal) {
+                elCells[k].value = currentVal;
+                elCells[k].dispatchEvent(new Event('change'));
+            }
+
+            k++;
         }
     }
-    sudoku.log();
 
-    var solver = new SudokuSolver(sudoku);
-    var solvedSudoku = solver.solve();
-    if (!solvedSudoku) {
-        return false;
-    }
+    document.getElementById('solve').click();
 
-    var currentCell;
+    var k = 0;
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            currentCell = solvedSudoku.getCell(i + 1, j + 1);
-            if (!currentCell || currentCell.getVal() !== testCase.out[i][j]) {
+            if (elCells[k].value !== testCase.out[i][j].toString()) {
                 return false;
             }
+            k++;
         }
     }
 
     return true;
+}
+
+function print(message) {
+    console.log(message);
+}
+
+// Print a horizontal rule
+function printHr() {
+    print('-----------------');
 }
