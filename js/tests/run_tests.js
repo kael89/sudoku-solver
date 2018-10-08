@@ -29,31 +29,25 @@ function runAllTestCases(testCases) {
 }
 
 function runTestCase(testCase) {
-    var elCells = document.getElementById('sudoku').getElementsByTagName('input');
+    var sudoku = new Sudoku();
 
-    var k = 0;
-    var currentVal;
+    var currentCell;
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            currentVal = testCase.in[i][j];
-            if (currentVal) {
-                elCells[k].value = currentVal;
-                elCells[k].dispatchEvent(new Event('change'));
-            }
-
-            k++;
+            currentCell = new CellElement(i + 1, j + 1, testCase.in[i][j]);
+            sudoku.setCell(currentCell);
         }
     }
 
-    document.getElementById('solve').click();
+    var solvedSudoku = new SudokuSolver(sudoku).solve();
 
-    var k = 0;
+    var currentCell;
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
-            if (elCells[k].value !== testCase.out[i][j].toString()) {
+            currentCell = solvedSudoku.getCell(i + 1, j + 1);
+            if (currentCell.getVal() !== testCase.out[i][j]) {
                 return false;
             }
-            k++;
         }
     }
 

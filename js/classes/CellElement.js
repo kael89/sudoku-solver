@@ -23,7 +23,6 @@ function CellElement(row, col, val) {
         this.el.addEventListener('blur', function () {
             self.losesFocus();
         })
-        // TODO check if event is correct for value change
         this.el.addEventListener('change', function () {
             self.setVal(self.el.value);
             self.notifyObservers();
