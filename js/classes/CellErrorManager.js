@@ -53,10 +53,37 @@ function CellErrorManager() {
     }
 
     this.updateErrors = function (cell, errorCells) {
+        this.removeErrors(cell);
         if (errorCells.length) {
             this.addErrors(cell, errorCells);
-        } else {
-            this.removeErrors(cell);
+        }
+        this.log();
+    }
+
+    // Prints the currently tracked errors
+    this.log = function () {
+        console.log('Cell errors:');
+
+        var currentErrors;
+        var errorCount;
+        var cell;
+        var str;
+
+        for (var i = 1; i <= 9; i++) {
+            for (var j = 1; j <= 9; j++) {
+                currentErrors = this.errors[i][j];
+                errorCount = currentErrors.length;
+                if (errorCount === 0) {
+                    continue;
+                }
+
+                str = '[' + i + ',' + j + ']: ';
+                for (var k = 0; k < currentErrors.length; k ++) {
+                    cell = currentErrors[k];
+                    str += '(' + cell.getRow() + ',' + cell.getCol() + ')';
+                }
+                console.log(str);
+            }
         }
     }
 

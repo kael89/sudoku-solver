@@ -65,7 +65,7 @@ function Sudoku() {
         console.log('Sudoku:');
         for (var i = 1; i <= 9; i++) {
             // Line numbering, using lowercase chars (a - i)
-            str = '(' + String.fromCharCode(96 + i) + ')  ';
+            str = '(' + intToChar(i) + ')  ';
 
             for (var j = 1; j <= 9; j++) {
                 val = this.cells[i][j].getVal();
