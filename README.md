@@ -1,9 +1,9 @@
 # Sudoku Solver
 Live system version: https://sudoku-solver-kael89.herokuapp.com/
 
-This project is a web page which can solve a Sudoku problem. The user enters the desired values in the Sudoku cells, and after pushing the "Solve" button they can see the result in the page. 
+This project is a web page which solves a Sudoku problem. The user enters the desired values in the Sudoku cells. Then they can hit the "Solve" button to display the result in the page. 
 
-The program also detects errors in the user input, e.g. same number in the same row, etc. The program will not be able to solve the Sudoku, unless all values are valid.
+The program also detects errors in the user input, e.g. same number in the same row. The page displays an alert in that case.
 
 <p align="center">
 	<img src="https://cloud.githubusercontent.com/assets/20692464/26444204/bb4d8816-417e-11e7-90e4-a233912166e0.jpg" alt="Initial Sudoku">
@@ -17,7 +17,11 @@ The program also detects errors in the user input, e.g. same number in the same 
 Just clone/download the project files, and run sudoku-solver.html at your browser of choice.
 
 ## Running the tests
-TODO write instructions
+
+The repo contains a file, test-cases.js, with test cases of different levels. An easy way to use those tests is provided in the beggining of the main code file, js/main.js. You can also see the initial (before solving) and final Sudoku tables in your browser's console.
+
+## Built With
+* [Opentip](http://www.opentip.org/) - Used to generate tooltips for erros in user input
 
 ## Authors
 **Kostas Karvounis** - [kael89](https://github.com/kael89)
