@@ -1,13 +1,14 @@
 function App() {
+    var sudokuElementId = 'sudoku';
+
     this.create = function () {
-        this.sudokuElementId =  'sudoku';
         this.resetSudoku();
         this.addEventListeners();
     }
 
     this.resetSudoku = function () {
         this.sudoku = new SudokuElement();
-        this.sudoku.render(this.sudokuElementId);
+        this.sudoku.render(sudokuElementId);
     }
 
     this.addEventListeners = function () {
@@ -37,7 +38,7 @@ function App() {
         }
 
         this.copyCellValues(solvedSudoku, this.sudoku);
-        this.sudoku.refresh(this.sudokuElementId);
+        this.sudoku.refresh(sudokuElementId);
     }
 
     this.copyCellValues = function (sourceSudoku, targetSudoku) {

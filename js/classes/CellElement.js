@@ -1,4 +1,7 @@
 function CellElement(row, col, val) {
+    var userInputClass = 'user-input';
+    var wrongInputClass = 'wrong-input';
+
     this.create = function () {
         Cell.call(this, row, col, val)
         this.isUserInput = false;
@@ -39,13 +42,13 @@ function CellElement(row, col, val) {
         }
 
         var method = this.isUserInput ? 'addClass' : 'removeClass';
-        this.el[method]('user-input');
+        this.el[method](userInputClass);
     }
 
     this.gainsFocus = function () {
         this.isUserInput = true;
         this.refresh();
-        this.el.addClass('user-input');
+        this.el.addClass(userInputClass);
     }
 
     this.losesFocus = function () {
@@ -60,11 +63,11 @@ function CellElement(row, col, val) {
     }
 
     this.addError = function () {
-        this.el.addClass('wrong-input');
+        this.el.addClass(wrongInputClass);
     }
 
     this.removeError = function () {
-        this.el.removeClass('wrong-input');
+        this.el.removeClass(wrongInputClass);
     }
 
     this.update = function (hasError) {
