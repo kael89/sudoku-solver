@@ -57,7 +57,6 @@ function CellErrorManager() {
         if (errorCells.length) {
             this.addErrors(cell, errorCells);
         }
-        this.log();
     }
 
     // Prints the currently tracked errors
