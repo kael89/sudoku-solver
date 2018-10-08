@@ -24,7 +24,6 @@ function SudokuElement() {
     }
 
     this.createCell = function (row, col) {
-        // TODO get val already set in order to display it in DOM
         var cell = new CellElement(row, col, this.cells[row][col].getVal());
         cell.registerObserver(this);
         return cell;

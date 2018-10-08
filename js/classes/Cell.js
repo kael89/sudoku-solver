@@ -43,7 +43,6 @@ function Cell(row, col, val) {
     this.setVal = function (val) {
         val = parseInt(val);
         if (val >= 1 && val <= 9) {
-            // TODO does it cause problems with invalid numbers ( > 9)?
             this.val = val;
             this.availVals = [];
         }
