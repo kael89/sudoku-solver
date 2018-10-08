@@ -53,13 +53,21 @@ function SudokuElement() {
 
     this.update = function (obj) {
         if (obj instanceof CellElement) {
-            var invalidCells = SudokuValidator.getInvalidCells(this, obj);
-            this.updateErrors(obj, invalidCells);
+            this.validateCell(obj);
         }
     }
 
-    this.updateErrors = function (cell, errorCells) {
-        this.errorManager.updateErrors(cell, errorCells);
+    this.validateCell = function (cell) {
+        var elCell = cell.getElement();
+
+        if (elCell.value < 1 || elCell.value > 9) {
+            window.alert('Values must be between 1 and 9');
+            elCell.value = '';
+            return;
+        }
+
+        var invalidCells = SudokuValidator.getInvalidCells(this, cell);
+        this.errorManager.updateErrors(cell, invalidCells);
     }
 
     this.create();
