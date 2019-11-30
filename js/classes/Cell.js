@@ -45,6 +45,9 @@ function Cell(row, col, val) {
         if (val >= 1 && val <= 9) {
             this.val = val;
             this.availVals = [];
+        } else {
+            this.val = undefined;
+            this.resetAvailVals();
         }
     }
 

@@ -38,6 +38,8 @@ function CellElement(row, col, val) {
     this.refresh = function () {
         if (this.val) {
             this.el.setAttribute('value', this.val);
+        } else {
+            this.el.removeAttribute('value');
         }
 
         var method = this.isUserInput ? 'addClass' : 'removeClass';

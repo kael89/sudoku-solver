@@ -40,6 +40,9 @@ function runTestCase(testCase) {
     }
 
     var solvedSudoku = new SudokuSolver(sudoku).solve();
+    if (!solvedSudoku) {
+        return false;
+    }
 
     var currentCell;
     for (var i = 0; i < 9; i++) {

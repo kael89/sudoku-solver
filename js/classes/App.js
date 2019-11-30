@@ -38,7 +38,7 @@ function App() {
         }
 
         this.copyCellValues(solvedSudoku, this.sudoku);
-        this.sudoku.refresh(sudokuElementId);
+        this.sudoku.refresh();
     }
 
     this.copyCellValues = function (sourceSudoku, targetSudoku) {
