@@ -6,11 +6,11 @@ This project is a web page which solves a Sudoku problem. The user enters the de
 The program also detects errors in the user input, e.g. same number in the same row. The page displays an alert in that case.
 
 <p align="center">
-	<img src="https://cloud.githubusercontent.com/assets/20692464/26444204/bb4d8816-417e-11e7-90e4-a233912166e0.jpg" alt="Initial Sudoku">
+	<img src="https://user-images.githubusercontent.com/20692464/84562612-055ffe00-ad99-11ea-9f6c-4d1a2816b47a.jpg" alt="Initial Sudoku">
 </p>
 
 <p align="center">
-	<img src="https://cloud.githubusercontent.com/assets/20692464/26444205/bc4bb5f8-417e-11e7-8f48-aeb62d2f67bb.jpg" alt="Initial Sudoku">
+	<img src="https://user-images.githubusercontent.com/20692464/84562613-06912b00-ad99-11ea-95a4-186c7e9e885d.jpg" alt="Initial Sudoku">
 </p>
 
 ## Installing
